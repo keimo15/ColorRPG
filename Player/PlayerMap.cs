@@ -27,7 +27,7 @@ public class PlayerMap : MonoBehaviour
 
     [SerializeField] MapUIManager ui;
 
-    public static bool doButtle = false;    // バトル後にこのシーンに遷移してきたかどうか
+    public static bool doButtle;                                // バトル後にこのシーンに遷移してきたかどうか
 
     // Start is called before the first frame update
     void Start()
@@ -92,10 +92,12 @@ public class PlayerMap : MonoBehaviour
         // マップを開くたびに討伐済みのシンボルエンカウントを削除する
         for (int i=0; i<symbolEnemiesIsDead.Length; i++)
         {
+            if (symbolEnemies[i] == null) continue;
             if (symbolEnemiesIsDead[i])
             {
                 foreach (SymbolEncount symbol in symbolEncount)
                 {
+                    if (symbol == null) continue;
                     if (symbol.sceneName == symbolEnemies[i])
                     {
                         symbol.DestroySymbolEnemy();
@@ -103,7 +105,7 @@ public class PlayerMap : MonoBehaviour
                 }
             }
         }
-        if (doButtle && lastPlayerPos != null)
+        if (doButtle)
         {
             this.transform.position = lastPlayerPos;
             doButtle = false;

@@ -13,12 +13,15 @@ public class PlayerReward : MonoBehaviour
     public GameObject textBox;
     public GameObject talkBox;
 
+    bool talking;
+
     [SerializeField] GameManager gameManager;
     [SerializeField] EnemyController enemy;
     [SerializeField] UIManager ui;
 
     void Start()
     {
+        talking = false;
         row = 0;
         InactiveTalkBox();
         contents = new string[3];
@@ -42,6 +45,12 @@ public class PlayerReward : MonoBehaviour
     void Update()
     {
         if (GameManager.gameState != GameState.Reward) return;
+        
+        if (!talking)
+        {
+            NextTalk();
+            talking = true;
+        }
         if (Input.GetButtonDown("Jump"))
         {
             NextTalk();

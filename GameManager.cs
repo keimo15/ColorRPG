@@ -48,7 +48,9 @@ public class GameManager : MonoBehaviour
     {
         RandomNextStage();
         camera.ActionCamera(nowStage);
+        player.invincibleTime(0.5f);
         PosReset();
+        player.onGround = false;
         destroyEnemyAttack();
         gameState = GameState.Action;
     }
@@ -57,8 +59,6 @@ public class GameManager : MonoBehaviour
     public void CommandMode()
     {
         camera.CommandCamera();
-        player.invincibleTime(1.0f);
-        PosReset();
         ui.ActiveImage(ui.bigAttackImage);
         destroyEnemyAttack();
         command.SetFirstCommand(0, ui.commandBoxBlack, ui.commandBoxRed, ui.commandBoxGreen, ui.commandBoxBlue);
@@ -74,8 +74,6 @@ public class GameManager : MonoBehaviour
     public void ItemCommandMode()
     {
         camera.ItemCommandCamera();
-        player.invincibleTime(1.0f);
-        PosReset();
         ui.ActiveImage(ui.bigItemImage);
         destroyEnemyAttack();
         command.SetFirstCommand(0, ui.commandBoxReturn, ui.commandBoxApple, ui.commandBoxHerb, ui.commandBoxFlower);
