@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rbody;                  // 当たり判定
     public Transform playerPos;         // Player の座標
     float axisH = 0.0f;                 // 左右入力
-    bool onGround;                      // 地上判定
+    public bool onGround = false;       // 地上判定
     bool inDamage = false;              // ダメージ中フラグ
     public LayerMask groundLayer;       // 着地できるレイヤー
 
@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour
         // 攻撃力
         public static int power = 1;
         // 所持金
-        public static int haveGold = 10;
+        public static int haveGold = 0;
         // 属性の解放状況
-        public static bool canUseGreen = true;
+        public static bool canUseGreen = false;
         public static bool canUseBlue  = false;
         public static bool canUseRed   = false;
         // 属性エネルギーの所持数
@@ -40,11 +40,11 @@ public class PlayerController : MonoBehaviour
         public static int haveBlue  = 0;
         public static int haveRed   = 0;
         // アイテムの所持数
-        public static int haveApple  = 3;
-        public static int haveHerb   = 3;
-        public static int haveFlower = 3;
+        public static int haveApple  = 0;
+        public static int haveHerb   = 0;
+        public static int haveFlower = 0;
         // 能力の開放状況
-        public static bool canJump  = true;
+        public static bool canJump  = false;
         public static bool canDash  = false;
         public static bool canBreak = false;
     
@@ -69,8 +69,8 @@ public class PlayerController : MonoBehaviour
 
         ui.UpdateItemCount();
 
-        // アクション中以外と、ダメージ中は何もしない
-        if (GameManager.gameState != GameState.Action || inDamage)
+        // アクション中は何もしない
+        if (GameManager.gameState != GameState.Action)
         {
             return;
         }
@@ -117,8 +117,6 @@ public class PlayerController : MonoBehaviour
                 // スプライトを非表示
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }
-
-            return; // ダメージ中は操作による移動をさせない
         }
 
         // 地上判定
@@ -154,11 +152,13 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.tag == "Attack")
         {
             // コマンドモードへ移行
+            invincibleTime(2.0f);
             gameManager.CommandMode();
         }
         else if (collision.gameObject.tag == "ItemUse")
         {
             // アイテムコマンドモードへ移行
+            invincibleTime(2.0f);
             gameManager.ItemCommandMode();
         }
         else if (collision.gameObject.tag == "Escape")
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
     // 被ダメージ
     public void GetDamage(GameObject gameObject)
     {
-        if (GameManager.gameState == GameState.Action)
+        if (GameManager.gameState == GameState.Action && !inDamage)
         {
             hp--;
             if (hp > 0)

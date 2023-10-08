@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class MapUIManager : MonoBehaviour
 {
-    // [SerializeField] GameManager gameManager;
-    // [SerializeField] PlayerMap player;
+    // マップ名の表示
+    public string mapName = "";
+    public GameObject mapNameObject;
+    public GameObject mapNameBox;
 
     // 所持属性の数
     int haveRed = 0;
@@ -39,6 +42,16 @@ public class MapUIManager : MonoBehaviour
 
     void Start()
     {
+        // マップ名を表示し、3秒後に非表示にする
+        ActiveImage(mapNameObject);
+        ActiveImage(mapNameBox);
+        mapNameObject.GetComponent<Text>().text = mapName;
+        StartCoroutine(DelayMethod(3.0f, () =>
+        {
+            InactiveImage(mapNameObject);
+            InactiveImage(mapNameBox);
+        }));
+
         // 各属性の開放状況に応じて非表示にする
         if (!PlayerController.canUseRed)
         {
@@ -122,5 +135,11 @@ public class MapUIManager : MonoBehaviour
     {
         if (image == null) return;
         image.SetActive(false);
+    }
+
+    public IEnumerator DelayMethod(float waitTime, Action action)
+    {
+        yield return new WaitForSeconds(waitTime);
+        action();
     }
 }

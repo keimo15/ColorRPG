@@ -14,6 +14,11 @@ public class CannonController : MonoBehaviour
     Vector2 v;
     Vector2 gatePos;                    // 発射位置の座標
 
+    public float turnBackPoint = 0f;    // 回転方向を切り替える角度
+    public float rotationSpeed = 0f;    // 発射方向の回転
+    float currentRotation;              // 現在の角度
+    public bool clockWise = false;      // 時計回りに回転しているか
+
     public float passedTimes = 0;       // 経過時間
 
     [SerializeField] GameManager gameManager;
@@ -41,5 +46,25 @@ public class CannonController : MonoBehaviour
             Rigidbody2D rbody = obj.GetComponent<Rigidbody2D>();
             rbody.AddForce(v, ForceMode2D.Impulse);
         }
+
+        updateRotation();
+    }
+
+    void updateRotation()
+    {
+        // いつか直す
+        // if (currentRotation < turnBackPoint) clockWise = false;
+        // if (currentRotation > direction)     clockWise = true;
+        // if (clockWise) currentRotation -= rotationSpeed * Time.deltaTime;
+        // else           currentRotation += rotationSpeed * Time.deltaTime;
+
+        // // 0f <= currentRotation <= 360f をキープする
+        // if (currentRotation > 360f) currentRotation -= 360f;
+        // if (currentRotation < 0f)   currentRotation += 360f;
+
+        currentRotation += rotationSpeed * Time.deltaTime;
+        float x = Mathf.Cos((direction + currentRotation) * Mathf.Deg2Rad);
+        float y = Mathf.Sin((direction + currentRotation) * Mathf.Deg2Rad);
+        v = new Vector2(x, y) * fireSpeed;
     }
 }
