@@ -95,7 +95,6 @@ public class PlayerCommand : MonoBehaviour
                     }
                     if (PlayerMap.lastScene != null)
                     {
-                        Debug.Log("toReward");
                         gameManager.RewardMode();
                     }
                 }

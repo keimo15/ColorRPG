@@ -74,6 +74,10 @@ public class PlayerReward : MonoBehaviour
             {
                 contents[2] += "緑";
             }
+            else if (enemy.name == "IslandBoss")
+            {
+                contents[2] += "青";
+            }
             contents[2] += "」を世界に取り戻した！";
             gameManager.unlockColor(enemy.name);
             textBox.GetComponent<Text>().text = contents[row];
