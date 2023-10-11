@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject greenNum;
     public GameObject blueNum;
     public GameObject enemyName;
+    public GameObject helpMessage;
     public GameObject commandBoxBlack;
     public GameObject commandBoxRed;
     public GameObject commandBoxGreen;
@@ -128,6 +129,7 @@ public class UIManager : MonoBehaviour
     // 攻撃コマンドを有効化する
     public void ActiveCommandImage()
     {
+        ActiveImage(helpMessage);
         ActiveImage(crossImage);
         ActiveImage(commandBoxBlack);
         ActiveImage(commandBoxRed);
@@ -138,6 +140,7 @@ public class UIManager : MonoBehaviour
     // 攻撃コマンドを無効化する
     public void InactiveCommandImage()
     {
+        InactiveImage(helpMessage);
         InactiveImage(crossImage);
         InactiveImage(commandBoxBlack);
         InactiveImage(commandBoxRed);
@@ -148,6 +151,7 @@ public class UIManager : MonoBehaviour
     // アイテムコマンドを有効化する
     public void ActiveItemCommandImage()
     {
+        ActiveImage(helpMessage);
         ActiveImage(crossImage);
         ActiveImage(commandBoxReturn);
         ActiveImage(commandBoxApple);
@@ -158,6 +162,7 @@ public class UIManager : MonoBehaviour
     // アイテムコマンドを無効化する
     public void InactiveItemCommandImage()
     {
+        InactiveImage(helpMessage);
         InactiveImage(crossImage);
         InactiveImage(commandBoxReturn);
         InactiveImage(commandBoxApple);

@@ -19,15 +19,15 @@ public class PlayerMap : MonoBehaviour
     public static string lastScene;         // エンカウント前のシーン
     public static Vector2 lastPlayerPos;    // エンカウント前の座標
 
-    public string[] enemies;                                    // ランダムエンカウント一覧
-    public SymbolEncount[] symbolEncount;                       // シンボルエンカウント一覧（現在のマップの）
-    public static string[] symbolEnemies = {"ForestBoss"};      // シンボルエンカウント一覧
-    public static bool[] symbolEnemiesIsDead = new bool[1];     // シンボルエンカウント討伐状況
+    public string[] enemies;                                                // ランダムエンカウント一覧
+    public SymbolEncount[] symbolEncount;                                   // シンボルエンカウント一覧（現在のマップの）
+    public static string[] symbolEnemies = {"ForestBoss", "IslandBoss"};    // シンボルエンカウント一覧
+    public static bool[] symbolEnemiesIsDead = new bool[2];                 // シンボルエンカウント討伐状況
     System.Random r = new System.Random();
 
     [SerializeField] MapUIManager ui;
 
-    public static bool doButtle;                                // バトル後にこのシーンに遷移してきたかどうか
+    public static bool doButtle;    // バトル後にこのシーンに遷移してきたかどうか
 
     // Start is called before the first frame update
     void Start()

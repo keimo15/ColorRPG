@@ -32,11 +32,11 @@ public class PlayerController : MonoBehaviour
         // 所持金
         public static int haveGold = 0;
         // 属性の解放状況
-        public static bool canUseGreen = false;
+        public static bool canUseGreen = true;
         public static bool canUseBlue  = false;
         public static bool canUseRed   = false;
         // 属性エネルギーの所持数
-        public static int haveGreen = 0;
+        public static int haveGreen = 10;
         public static int haveBlue  = 0;
         public static int haveRed   = 0;
         // アイテムの所持数
@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
         public static int haveHerb   = 0;
         public static int haveFlower = 0;
         // 能力の開放状況
-        public static bool canJump  = false;
-        public static bool canDash  = false;
+        public static bool canJump  = true;
+        public static bool canWalk  = true;
         public static bool canBreak = false;
     
     // 一時的なバフ

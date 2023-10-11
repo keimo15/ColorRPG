@@ -7,19 +7,26 @@ using UnityEngine.UI;
 
 public class Chest : MonoBehaviour
 {
+    public enum Ability
+    {
+        Jump,
+        Walk,
+    }
+
     int row;
     public string name;
     public string[] contents;
     public GameObject nameBox;
     public GameObject textBox;
     public GameObject talkBox;
-    bool canOpen = false;           // 開封圏内にいるか
-    static bool isOpened = false;   // 開封済みか
+    bool canOpen;                   // 開封圏内にいるか
+    bool isOpened;                  // 開封済みか
     public Sprite openChest;        // 開いている宝箱
-    public string newAbility;       // 獲得する能力
+    public Ability newAbility;      // 獲得する能力
 
     void Start()
     {
+        isOpened = false;
         row = 0;
         InactiveTalkBox();
         // 既に開いているとき
@@ -46,29 +53,42 @@ public class Chest : MonoBehaviour
     {
         ActiveTalkBox();
         nameBox.GetComponent<Text>().text = name;
-        // メッセージがまだ続く場合
-        if (row < contents.Length)
-        {
-            textBox.GetComponent<Text>().text = contents[row];
-            row++;
-        }
+
         // メッセージ終了
-        else
+        if (row == contents.Length)
         {
             InactiveTalkBox();
-            GetNewAbility(newAbility);
+            GetNewAbility();
             GetComponent<SpriteRenderer>().sprite = openChest;
             GameManager.gameState = GameState.Map;
             isOpened = true;
         }
+        
+        // 獲得済みの場合
+        else if ((newAbility == Ability.Jump && PlayerController.canJump) ||
+            (newAbility == Ability.Walk && PlayerController.canWalk))
+        {
+            textBox.GetComponent<Text>().text = "宝箱は空っぽだった...。";
+            row = contents.Length;
+        }
+
+        // メッセージがまだ続く場合
+        else if (row < contents.Length)
+        {
+            textBox.GetComponent<Text>().text = contents[row];
+            row++;
+        }
     }
 
-    void GetNewAbility(string ability)
+    void GetNewAbility()
     {
-        switch(ability)
+        switch(newAbility)
         {
-          case "Jump":
+          case Ability.Jump:
             PlayerController.canJump = true;
+            break;
+          case Ability.Walk:
+            PlayerController.canWalk = true;
             break;
           default:
             break;

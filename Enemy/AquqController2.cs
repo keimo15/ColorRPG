@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AquqController : MonoBehaviour
+public class AquqController2 : MonoBehaviour
 {
     public float deleteTime = 3.0f;     // 削除する時間指定
     public float rotation;              // オブジェクトを回転させる
-    float limitUp    =  5f;
-    float limitDown  = -5f;
-    float limitRight =  9f;
-    float limitLeft  = -9f;
+    float limitUp    =  25f;
+    float limitDown  =  15f;
+    float limitRight =   9f;
+    float limitLeft  =  -9f;
 
     void Start()
     {

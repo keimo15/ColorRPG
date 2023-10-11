@@ -46,9 +46,9 @@ public class GameManager : MonoBehaviour
     // アクションモードへの移行
     public void ActionMode()
     {
+        player.invincibleTime(0.5f);
         RandomNextStage();
         camera.ActionCamera(nowStage);
-        player.invincibleTime(0.5f);
         PosReset();
         player.onGround = false;
         destroyEnemyAttack();
@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         camera.CommandCamera();
         ui.ActiveImage(ui.bigAttackImage);
         destroyEnemyAttack();
+        PosReset();
         command.SetFirstCommand(0, ui.commandBoxBlack, ui.commandBoxRed, ui.commandBoxGreen, ui.commandBoxBlue);
         StartCoroutine(DelayMethod(1.0f, () =>
         {
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
         camera.ItemCommandCamera();
         ui.ActiveImage(ui.bigItemImage);
         destroyEnemyAttack();
+        PosReset();
         command.SetFirstCommand(0, ui.commandBoxReturn, ui.commandBoxApple, ui.commandBoxHerb, ui.commandBoxFlower);
         command.nameBox.GetComponent<Text>().text = "";
         command.textBox.GetComponent<Text>().text = "アイテムを使わずに戻る";
