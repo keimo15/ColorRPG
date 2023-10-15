@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public bool onGround = false;       // 地上判定
     bool inDamage = false;              // ダメージ中フラグ
     public LayerMask groundLayer;       // 着地できるレイヤー
+    public LayerMask moveGroundLayer;
+
+    private GroundMover1 moveObj = null;
+    private string moveGroundTag = "MoveGround";
 
     [SerializeField] GameManager gameManager;
     [SerializeField] UIManager ui;
@@ -124,13 +128,39 @@ public class PlayerController : MonoBehaviour
                                         0.2f,                  // 円の半径
                                         Vector2.down,          // 発射方向
                                         0.0f,                  // 発射距離
-                                        groundLayer);          // 検出するレイヤー
+                                        groundLayer)           // 検出するレイヤー
+                || Physics2D.CircleCast(transform.position,    // 発射位置
+                                        0.2f,                  // 円の半径
+                                        Vector2.down,          // 発射方向
+                                        0.0f,                  // 発射距離
+                                        moveGroundLayer);      // 検出するレイヤー
         
         // 速度の更新
         if (onGround || axisH != 0)
         {
             // 地面の上 or 速度が 0 ではない
-            rbody.velocity = new Vector2(axisH * (speed + plusSpeed), rbody.velocity.y);
+            Vector2 addVelocity = Vector2.zero;
+            if (moveObj != null)
+            {
+                switch(moveObj.direction)
+                {
+                  case Direction.right:
+                    addVelocity = new Vector2(speed, 0);
+                    break;
+                  case Direction.left:
+                    addVelocity = new Vector2(-speed, 0);
+                    break;
+                  case Direction.up:
+                    addVelocity = new Vector2(0, speed);
+                    break;
+                  case Direction.down:
+                    addVelocity = new Vector2(0, -speed);
+                    break;
+                  default:
+                    break;
+                }
+            }
+            rbody.velocity = new Vector2(axisH * (speed + plusSpeed), rbody.velocity.y) + addVelocity;
         }
     }
 
@@ -140,6 +170,18 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             GetDamage(collision.gameObject);
+        }
+        else if (collision.collider.tag == moveGroundTag)
+        {
+            moveObj = collision.gameObject.GetComponent<GroundMover1>();
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.tag == moveGroundTag)
+        {
+            moveObj = null;
         }
     }
 
