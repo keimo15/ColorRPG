@@ -17,7 +17,7 @@ public class GroundMover1 : MonoBehaviour
     public Direction direction;                 // 移動方向
     public int stageNum;                        // 設置されているステージ番号
     public float speed;                         // 移動速度
-    public Vector2 startPos;                    // 移動開始位置
+    Vector2 startPos;                           // 移動開始位置
     public bool isStartPos = true;              // 開始位置にいるかどうか
     [SerializeField] StageInfo stage;           // ステージ
     [SerializeField] GameManager gameManager;
@@ -25,9 +25,10 @@ public class GroundMover1 : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        startPos = new Vector2(rbody.position.x, rbody.position.y);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (gameObject == null) return;
 
