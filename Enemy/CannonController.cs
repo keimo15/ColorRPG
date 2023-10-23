@@ -13,6 +13,7 @@ public class CannonController : MonoBehaviour
     public float direction = 180f;      // 発射方向
     Vector2 v;
     Vector2 gatePos;                    // 発射位置の座標
+    public bool gateMove = false;
 
     public float turnBackPoint = 0f;    // 回転方向を切り替える角度
     public float rotationSpeed = 0f;    // 発射方向の回転
@@ -46,6 +47,8 @@ public class CannonController : MonoBehaviour
             Rigidbody2D rbody = obj.GetComponent<Rigidbody2D>();
             rbody.AddForce(v, ForceMode2D.Impulse);
         }
+
+        if (gateMove) gatePos = new Vector2(gate.transform.position.x, gate.transform.position.y);
 
         updateRotation();
     }

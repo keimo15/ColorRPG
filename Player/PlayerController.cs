@@ -14,8 +14,10 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;       // 着地できるレイヤー
     public LayerMask moveGroundLayer;
 
-    private GroundMover1 moveObj = null;
-    private string moveGroundTag = "MoveGround";
+    private GroundMoverStraight moveStraightObj = null;
+    private GroundMoverLoop moveLoopObj = null;
+    private string moveStraightGroundTag = "MoveStraightGround";
+    private string moveLoopGroundTag = "MoveLoopGround";
 
     [SerializeField] GameManager gameManager;
     [SerializeField] UIManager ui;
@@ -37,16 +39,16 @@ public class PlayerController : MonoBehaviour
         public static int haveGold = 0;
         // 属性の解放状況
         public static bool canUseGreen = true;
-        public static bool canUseBlue  = false;
-        public static bool canUseRed   = false;
+        public static bool canUseBlue  = true;
+        public static bool canUseRed   = true;
         // 属性エネルギーの所持数
-        public static int haveGreen = 10;
-        public static int haveBlue  = 0;
-        public static int haveRed   = 0;
+        public static int haveGreen = 3;
+        public static int haveBlue  = 3;
+        public static int haveRed   = 3;
         // アイテムの所持数
-        public static int haveApple  = 0;
-        public static int haveHerb   = 0;
-        public static int haveFlower = 0;
+        public static int haveApple  = 3;
+        public static int haveHerb   = 3;
+        public static int haveFlower = 3;
         // 能力の開放状況
         public static bool canJump  = true;
         public static bool canWalk  = true;
@@ -140,21 +142,29 @@ public class PlayerController : MonoBehaviour
         {
             // 地面の上 or 速度が 0 ではない
             Vector2 addVelocity = Vector2.zero;
-            if (moveObj != null)
+            if (moveStraightObj != null)
             {
-                switch(moveObj.direction)
+                switch(moveStraightObj.direction)
                 {
                   case Direction.right:
-                    addVelocity = new Vector2(speed, 0);
+                    addVelocity = new Vector2(moveStraightObj.speed, 0);
                     break;
                   case Direction.left:
-                    addVelocity = new Vector2(-speed, 0);
+                    addVelocity = new Vector2(-moveStraightObj.speed, 0);
                     break;
-                  case Direction.up:
-                    addVelocity = new Vector2(0, speed);
+                  default:
                     break;
-                  case Direction.down:
-                    addVelocity = new Vector2(0, -speed);
+                }
+            }
+            else if (moveLoopObj != null)
+            {
+                switch(moveLoopObj.direction)
+                {
+                  case Direction.right:
+                    addVelocity = new Vector2(moveLoopObj.speed, 0);
+                    break;
+                  case Direction.left:
+                    addVelocity = new Vector2(-moveLoopObj.speed, 0);
                     break;
                   default:
                     break;
@@ -171,17 +181,25 @@ public class PlayerController : MonoBehaviour
         {
             GetDamage(collision.gameObject);
         }
-        else if (collision.collider.tag == moveGroundTag)
+        else if (collision.collider.tag == moveStraightGroundTag)
         {
-            moveObj = collision.gameObject.GetComponent<GroundMover1>();
+            moveStraightObj = collision.gameObject.GetComponent<GroundMoverStraight>();
+        }
+        else if (collision.collider.tag == moveLoopGroundTag)
+        {
+            moveLoopObj = collision.gameObject.GetComponent<GroundMoverLoop>();
         }
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.tag == moveGroundTag)
+        if (collision.collider.tag == moveStraightGroundTag)
         {
-            moveObj = null;
+            moveStraightObj = null;
+        }
+        else if (collision.collider.tag == moveLoopGroundTag)
+        {
+            moveLoopObj = null;
         }
     }
 
