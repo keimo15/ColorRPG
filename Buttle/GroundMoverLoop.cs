@@ -10,7 +10,7 @@ public enum Direction
     down,
 }
 
-public class GroundMover1 : MonoBehaviour
+public class GroundMoverLoop : MonoBehaviour
 {
     Rigidbody2D rbody;
 
@@ -18,8 +18,9 @@ public class GroundMover1 : MonoBehaviour
     public int stageNum;                        // 設置されているステージ番号
     public float speed;                         // 移動速度
     Vector2 startPos;                           // 移動開始位置
+    public float moveDistance;                  // 移動する距離
+    float distance;                             // 移動距離 
     public bool isStartPos = true;              // 開始位置にいるかどうか
-    [SerializeField] StageInfo stage;           // ステージ
     [SerializeField] GameManager gameManager;
 
     void Start()
@@ -40,6 +41,7 @@ public class GroundMover1 : MonoBehaviour
             {
                 rbody.velocity = new Vector2(0, 0);
                 rbody.MovePosition(startPos);
+                distance = 0;
                 isStartPos = true;
             }
             return;
@@ -56,38 +58,39 @@ public class GroundMover1 : MonoBehaviour
 
     void Move()
     {
+        distance += speed * Time.deltaTime;
         switch (direction)
         {
           case Direction.right:
             rbody.velocity = new Vector2(speed, 0);
-            if (rbody.position.x > stage.limitRight)
+            if (distance >= moveDistance)
             {
-                Vector2 v = new Vector2(stage.limitLeft, rbody.position.y);
-                rbody.MovePosition(v);
+                direction = Direction.left;
+                distance = 0;
             }
             break;
           case Direction.left:
             rbody.velocity = new Vector2(-speed, 0);
-            if (rbody.position.x < stage.limitLeft)
+            if (distance >= moveDistance)
             {
-                Vector2 v = new Vector2(stage.limitRight, rbody.position.y);
-                rbody.MovePosition(v);
+                direction = Direction.right;
+                distance = 0;
             }
             break;
           case Direction.up:
             rbody.velocity = new Vector2(0, speed);
-            if (rbody.position.y > stage.limitUp)
+            if (distance >= moveDistance)
             {
-                Vector2 v = new Vector2(rbody.position.x, stage.limitDown);
-                rbody.MovePosition(v);
+                direction = Direction.down;
+                distance = 0;
             }
             break;
           case Direction.down:
             rbody.velocity = new Vector2(0, -speed);
-            if (rbody.position.y < stage.limitDown)
+            if (distance >= moveDistance)
             {
-                Vector2 v = new Vector2(rbody.position.x, stage.limitUp);
-                rbody.MovePosition(v);
+                direction = Direction.up;
+                distance = 0;
             }
             break;
         }
