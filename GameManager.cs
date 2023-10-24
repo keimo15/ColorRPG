@@ -13,6 +13,7 @@ public enum GameState
     Map,
     Talking,
     GameOver,
+    Title,
 }
 
 public class GameManager : MonoBehaviour

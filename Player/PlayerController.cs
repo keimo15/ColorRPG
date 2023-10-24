@@ -39,8 +39,8 @@ public class PlayerController : MonoBehaviour
         public static int haveGold = 0;
         // 属性の解放状況
         public static bool canUseGreen = true;
-        public static bool canUseBlue  = true;
-        public static bool canUseRed   = true;
+        public static bool canUseBlue  = false;
+        public static bool canUseRed   = false;
         // 属性エネルギーの所持数
         public static int haveGreen = 3;
         public static int haveBlue  = 3;
