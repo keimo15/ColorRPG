@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TitleMenu : MonoBehaviour
+public class GameOverMenu : MonoBehaviour
 {
     int pointMenu;              // 0:つづきからあそぶ, 1:はじめからあそぶ, 2:あそびかた
     float axisV;                // 縦入力
@@ -15,11 +15,12 @@ public class TitleMenu : MonoBehaviour
     float downTimer;            // 下入力の長押し時間
 
     public GameObject[] menus;  // メニュー項目のテキスト
+    string TitleScene = "TitleMain";
 
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.gameState = GameState.Title;
+        GameManager.gameState = GameState.GameOver;
         pointMenu = 0;   
         axisV     = 0.0f;
         upTimer   = 0.0f;
@@ -30,7 +31,7 @@ public class TitleMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameState != GameState.Title)
+        if (GameManager.gameState != GameState.GameOver)
         {
             return;
         }
@@ -75,6 +76,20 @@ public class TitleMenu : MonoBehaviour
         }
 
         EmphasizeText();
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            switch (pointMenu)
+            {
+              case 0:
+                break;
+              case 1:
+                SceneManager.LoadScene(TitleScene);
+                break;
+              default:
+                break;
+            }   
+        }
     }
 
     // 選択中のテキストを強調する

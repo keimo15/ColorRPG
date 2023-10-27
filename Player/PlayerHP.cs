@@ -21,6 +21,10 @@ public class PlayerHP : MonoBehaviour
             {
                 lifeImage.GetComponent<Image>().sprite = blackLifeImage[PlayerController.hp-1];
             }
+        } 
+        else
+        {
+            lifeImage.SetActive(false);
         }
     }
 }
