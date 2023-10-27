@@ -22,11 +22,13 @@ public class GroundMoverLoop : MonoBehaviour
     float distance;                             // 移動距離 
     public bool isStartPos = true;              // 開始位置にいるかどうか
     [SerializeField] GameManager gameManager;
+    Direction startDirection;
 
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
         startPos = new Vector2(rbody.position.x, rbody.position.y);
+        startDirection = direction;
     }
 
     void FixedUpdate()
@@ -43,6 +45,7 @@ public class GroundMoverLoop : MonoBehaviour
                 rbody.MovePosition(startPos);
                 distance = 0;
                 isStartPos = true;
+                direction = startDirection;
             }
             return;
         }

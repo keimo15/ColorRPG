@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -237,17 +238,12 @@ public class PlayerController : MonoBehaviour
             hp--;
             if (hp > 0)
             {
-                // 移動停止（調整中）
-                // rbody.velocity = new Vector2(0, 0);
-
-                // ダメージ要因の反対方向にヒットバックさせる
-                // Vector3 v = (transform.position - gameObject.transform.position).normalized;
-                // rbody.AddForce(new Vector2(v.x * 10, v.y), ForceMode2D.Impulse);
                 invincibleTime(1.0f);  // 無敵時間
             }
             else
             {
                 // ゲームオーバー
+                hpSprite.SetHP();
                 GameOver();
             }
         }
@@ -277,6 +273,16 @@ public class PlayerController : MonoBehaviour
         rbody.velocity = new Vector2(0, 0);
         rbody.gravityScale = 1;
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
-        Destroy(gameObject, 1.0f);
+        StartCoroutine(DelayMethod(3.0f, () =>
+        {
+            Destroy(gameObject, 1.0f);
+            SceneManager.LoadScene("GameOver");
+        }));
+    }
+
+    IEnumerator DelayMethod(float waitTime, Action action)
+    {
+        yield return new WaitForSeconds(waitTime);
+        action();
     }
 }
