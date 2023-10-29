@@ -11,6 +11,7 @@ public class Chest : MonoBehaviour
     {
         Jump,
         Walk,
+        Punch,
     }
 
     int row;
@@ -66,7 +67,8 @@ public class Chest : MonoBehaviour
         
         // 獲得済みの場合
         else if ((newAbility == Ability.Jump && PlayerController.canJump) ||
-            (newAbility == Ability.Walk && PlayerController.canWalk))
+            (newAbility == Ability.Walk && PlayerController.canWalk) ||
+            (newAbility == Ability.Punch && PlayerController.canPunch))
         {
             textBox.GetComponent<Text>().text = "宝箱は空っぽだった...。";
             row = contents.Length;
@@ -89,6 +91,9 @@ public class Chest : MonoBehaviour
             break;
           case Ability.Walk:
             PlayerController.canWalk = true;
+            break;
+          case Ability.Punch:
+            PlayerController.canPunch = true;
             break;
           default:
             break;

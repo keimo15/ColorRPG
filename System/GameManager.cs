@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
         }));
     }
 
+    // リワードモードへの移行
     public void RewardMode()
     {
         gameState = GameState.Reward;

@@ -18,14 +18,17 @@ public class PlayerController : MonoBehaviour
     private GroundMoverStraight moveStraightObj = null;
     private GroundMoverLoop moveLoopObj = null;
     private string moveStraightGroundTag = "MoveStraightGround";
-    private string moveLoopGroundTag = "MoveLoopGround";
+    private string moveLoopGroundTag     = "MoveLoopGround";
+
+    private bool nearRedBlock;
+    private string redBlockTag           = "RedBlock";
+    private Collision2D redBlock;
 
     [SerializeField] GameManager gameManager;
     [SerializeField] UIManager ui;
     [SerializeField] StageInfo[] stages;
     [SerializeField] PlayerJump jump;
-    // [SerializeField] PlayerDash dash;
-    // [SerializeField] PlayerPunch punch;
+    [SerializeField] PlayerPunchBattle punch;
     [SerializeField] PlayerHP hpSprite;
     [SerializeField] PlayerAnimation animation;
 
@@ -40,12 +43,12 @@ public class PlayerController : MonoBehaviour
         public static int haveGold = 0;
         // 属性の解放状況
         public static bool canUseGreen = true;
-        public static bool canUseBlue  = false;
-        public static bool canUseRed   = false;
+        public static bool canUseBlue  = true;
+        public static bool canUseRed   = true;
         // 属性エネルギーの所持数
-        public static int haveGreen = 3;
-        public static int haveBlue  = 3;
-        public static int haveRed   = 3;
+        public static int haveGreen = 10;
+        public static int haveBlue  = 10;
+        public static int haveRed   = 10;
         // アイテムの所持数
         public static int haveApple  = 3;
         public static int haveHerb   = 3;
@@ -53,7 +56,7 @@ public class PlayerController : MonoBehaviour
         // 能力の開放状況
         public static bool canJump  = true;
         public static bool canWalk  = true;
-        public static bool canBreak = false;
+        public static bool canPunch = true;
     
     // 一時的なバフ
     public int plusPower;
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour
         // バフリセット
         plusPower = 0;
         plusSpeed = 0;
+        redBlock = null;
     }
 
     // Update is called once per frame
@@ -99,6 +103,23 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && canJump && onGround)
         {
             jump.Jump();
+        }
+
+        // パンチ
+        if (Input.GetKeyDown(KeyCode.Return) && canPunch && redBlock != null && ui.punchTimerOK)
+        {
+            // パンチされた RedBlock を探す
+            GameObject[] redBlocks = GameObject.FindGameObjectsWithTag(redBlockTag);
+            foreach (GameObject red in redBlocks)
+            {
+                if (red == redBlock.gameObject)
+                {
+                    StartCoroutine(punch.Punch(red));
+                    StartCoroutine(ui.PunchTimer());
+                    break;
+                }
+            }
+            redBlocks = null;
         }
     }
 
@@ -190,6 +211,10 @@ public class PlayerController : MonoBehaviour
         {
             moveLoopObj = collision.gameObject.GetComponent<GroundMoverLoop>();
         }
+        else if (collision.collider.tag == redBlockTag)
+        {
+            redBlock = collision;
+        }
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -201,6 +226,10 @@ public class PlayerController : MonoBehaviour
         else if (collision.collider.tag == moveLoopGroundTag)
         {
             moveLoopObj = null;
+        }
+        else if (collision.collider.tag == redBlockTag)
+        {
+            redBlock = null;
         }
     }
 

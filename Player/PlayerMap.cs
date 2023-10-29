@@ -106,11 +106,8 @@ public class PlayerMap : MonoBehaviour
                 }
             }
         }
-        if (doButtle)
-        {
-            this.transform.position = lastPlayerPos;
-            doButtle = false;
-        }
+        if (doButtle) this.transform.position = lastPlayerPos;
+        doButtle = false;
         PlayerController.hp = 5;
     }
 
@@ -183,7 +180,7 @@ public class PlayerMap : MonoBehaviour
         lastScene = SceneManager.GetActiveScene().name;
         lastPlayerPos = new Vector2(this.transform.position.x, this.transform.position.y);
         doButtle = true;
-        SceneManager.LoadScene(scene);
+        MapManager.ChangeScene(scene, -1);
     }
 
     // 討伐済みシンボルモンスターを記録する
