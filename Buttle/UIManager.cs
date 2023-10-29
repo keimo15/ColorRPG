@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     int haveGreen = 0;
     int haveBlue = 0;
 
+    // パンチインターバル
+    public int punchInterval = 5;
+    float timer = 0;
+
     // その他 UI
     public string retrySceneName = "";
     public GameObject bigAttackImage;
@@ -38,6 +42,12 @@ public class UIManager : MonoBehaviour
     public Sprite commandBoxNull;
     public GameObject crossImage;
     public GameObject stopEnemy;
+    public GameObject punchIcon;
+    public Sprite punchImage;
+    public Sprite cantPunchImage;
+    public GameObject punchCount;
+    public GameObject speechBalloon;
+    public bool punchTimerOK;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +82,19 @@ public class UIManager : MonoBehaviour
             InactiveImage(blueNum);
             commandBoxBlue.GetComponent<Image>().sprite = commandBoxNull;
             commandBoxFlower.GetComponent<Image>().sprite = commandBoxNull;
+        }
+        if (!PlayerController.canPunch)
+        {
+            InactiveImage(punchIcon);
+            InactiveImage(punchCount);
+            InactiveImage(speechBalloon);
+        }
+        else
+        {
+            timer = punchInterval;
+            punchCount.GetComponent<Text>().text = "OK";
+            punchIcon.GetComponent<Image>().sprite = punchImage;
+            punchTimerOK = true;
         }
     }
 
@@ -168,6 +191,21 @@ public class UIManager : MonoBehaviour
         InactiveImage(commandBoxApple);
         InactiveImage(commandBoxHerb);
         InactiveImage(commandBoxFlower);
+    }
+
+    // パンチにはインターバルが存在する
+    public IEnumerator PunchTimer()
+    {
+        punchIcon.GetComponent<Image>().sprite = cantPunchImage;
+        punchTimerOK = false;
+        for (int i=punchInterval; i>0; i--)
+        {
+            punchCount.GetComponent<Text>().text = i.ToString();
+            yield return new WaitForSeconds(1.0f);
+        }
+        punchCount.GetComponent<Text>().text = "OK";
+        punchIcon.GetComponent<Image>().sprite = punchImage;
+        punchTimerOK = true;
     }
 
     // リトライ

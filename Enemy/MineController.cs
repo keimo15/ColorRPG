@@ -12,7 +12,8 @@ public class MineController : MonoBehaviour
     public Sprite[] bomb;
     
     public float explodeTime = 5.0f;
-    public float passedTimes = 0;
+    public float startTime = 0;
+    float passedTimes;
 
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class MineController : MonoBehaviour
     {
         mineMarker.GetComponent<SpriteRenderer>().sprite = mineMarker1;
         gameObject.tag = "Untagged";
+        passedTimes = startTime;
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class MineController : MonoBehaviour
     {
         if (GameManager.gameState != GameState.Action)
         {
-            passedTimes = 0;
+            passedTimes = startTime;
             return;
         }
 
@@ -59,7 +61,7 @@ public class MineController : MonoBehaviour
         // 1.0 秒後（爆発開始）
         yield return new WaitForSeconds(0.4f);
         mineMarker.GetComponent<SpriteRenderer>().sprite = bomb[0];
-        gameObject.tag = "EnemyAttack";
+        gameObject.tag = "Enemy";
 
         // 1.1 秒後
         yield return new WaitForSeconds(0.1f);
