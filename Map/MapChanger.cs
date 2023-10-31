@@ -3,9 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapManager : MonoBehaviour
+public enum MapSceneName
 {
-    public static int doorNumber = 0;   // ドア番号
+    MapBlueTown,
+    MapBlueIsland,
+    MapFirstRoad,
+    MapGreenTown,
+    MapGreenForest,
+    MapRedTown,
+    MapRedCave1,
+    MapRedCave2,
+    MapRedCave3,
+}
+
+public class MapChanger : MonoBehaviour
+{
+    public static int doorNumber = 0;                                  // 最後に通過したドア番号
 
     // Start is called before the first frame update
     void Start()

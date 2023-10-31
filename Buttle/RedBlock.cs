@@ -16,7 +16,7 @@ public class RedBlock : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.gameState == GameState.Action)
+        if (GameManager.instance.gameState == GameState.Action)
         {
             isReset = false;
             return;
@@ -24,7 +24,6 @@ public class RedBlock : MonoBehaviour
 
         if (!isReset)
         {
-            Debug.Log("再表示");
             gameObject.SetActive(true);
             gameObject.GetComponent<SpriteRenderer>().sprite = originalSprite;
             gameObject.GetComponent<Collider2D>().enabled = true;

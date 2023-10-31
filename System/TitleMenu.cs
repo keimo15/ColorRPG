@@ -19,7 +19,7 @@ public class TitleMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.gameState = GameState.Title;
+        GameManager.instance.gameState = GameState.Title;
         pointMenu = 0;   
         axisV     = 0.0f;
         upTimer   = 0.0f;
@@ -30,7 +30,7 @@ public class TitleMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameState != GameState.Title)
+        if (GameManager.instance.gameState != GameState.Title)
         {
             return;
         }
@@ -75,6 +75,22 @@ public class TitleMenu : MonoBehaviour
         }
 
         EmphasizeText();
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            switch (pointMenu)
+            {
+              case 0:
+                SceneManager.LoadScene(GameManager.instance.lastMapScene);
+                break;
+              case 1:
+                break;
+              case 2:
+                break;
+              default:
+                break;
+            }   
+        }
     }
 
     // 選択中のテキストを強調する

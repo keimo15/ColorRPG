@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
-
     // 位置情報
     GameObject player;
     Transform CameraPos;

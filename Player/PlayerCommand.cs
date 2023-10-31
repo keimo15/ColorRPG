@@ -10,10 +10,10 @@ public class PlayerCommand : MonoBehaviour
     public GameObject textBox;
     public GameObject talkBox;
 
-    [SerializeField] GameManager gameManager;
+    [SerializeField] ButtleManager buttleManager;
     [SerializeField] UIManager ui;
+    [SerializeField] PlayerButtle player;
     [SerializeField] EnemyController enemy;
-    [SerializeField] PlayerController player;
 
     float light = 0.1f;         // 非選択オブジェクトの色の薄さ
 
@@ -29,7 +29,7 @@ public class PlayerCommand : MonoBehaviour
     {
         if (gameObject == null || enemy == null) return;
         
-        if (GameManager.gameState != GameState.Command && GameManager.gameState != GameState.UseItem)
+        if (GameManager.instance.gameState != GameState.Command && GameManager.instance.gameState != GameState.UseItem)
         {
             haveChosen = false;
             return;
@@ -45,21 +45,21 @@ public class PlayerCommand : MonoBehaviour
         axisV = Input.GetAxisRaw("Vertical");       // 上下キー入力
 
         // 攻撃を選択
-        if (GameManager.gameState == GameState.Command)
+        if (GameManager.instance.gameState == GameState.Command)
         {
             if (axisV > 0 && directionCommand != 0)
             {   // 上入力
                 SetFirstCommand(0, ui.commandBoxBlack, ui.commandBoxRed, ui.commandBoxGreen, ui.commandBoxBlue);
             }
-            else if (axisH < 0 && directionCommand != 1 && PlayerController.canUseRed && PlayerController.haveRed > 0)
+            else if (axisH < 0 && directionCommand != 1 && GameManager.instance.canUseRed && GameManager.instance.haveRed > 0)
             {   // 左入力
                 SetFirstCommand(1, ui.commandBoxRed, ui.commandBoxBlack, ui.commandBoxGreen, ui.commandBoxBlue);
             }
-            else if (axisV < 0 && directionCommand != 2 && PlayerController.canUseGreen && PlayerController.haveGreen > 0)
+            else if (axisV < 0 && directionCommand != 2 && GameManager.instance.canUseGreen && GameManager.instance.haveGreen > 0)
             {   // 下入力
                 SetFirstCommand(2, ui.commandBoxGreen, ui.commandBoxBlack, ui.commandBoxRed, ui.commandBoxBlue);
             }
-            else if (axisH > 0 && directionCommand != 3 && PlayerController.canUseBlue && PlayerController.haveBlue > 0)
+            else if (axisH > 0 && directionCommand != 3 && GameManager.instance.canUseBlue && GameManager.instance.haveBlue > 0)
             {   // 右入力
                 SetFirstCommand(3, ui.commandBoxBlue, ui.commandBoxBlack, ui.commandBoxRed, ui.commandBoxGreen);
             }
@@ -72,7 +72,7 @@ public class PlayerCommand : MonoBehaviour
                 // バフのリセット
                 player.plusPower = 0;
                 player.plusSpeed = 0;
-                gameManager.ActiveItemCommand();
+                buttleManager.ActiveItemCommand();
                 ui.InactiveCommandImage();
 
                 // 敵を倒した
@@ -87,27 +87,22 @@ public class PlayerCommand : MonoBehaviour
                             SceneManager.LoadScene(enemy.nextButtleSceneName);
                             return;
                         }
-                        // 連戦がないなら敵を討伐リストに加える
-                        else
-                        {
-                            PlayerMap.KillSymbolEnemy(enemy.name);
-                        }
                     }
-                    if (PlayerMap.lastScene != null)
+                    if (GameManager.instance.lastMapScene != null)
                     {
-                        gameManager.RewardMode();
+                        buttleManager.RewardMode();
                     }
                 }
                 // 敵をまだ倒していない
                 else
                 {
-                    gameManager.ActionMode();
+                    buttleManager.ActionMode();
                 }
             }
         }
 
         // アイテムを選択
-        else if (GameManager.gameState == GameState.UseItem)
+        else if (GameManager.instance.gameState == GameState.UseItem)
         {
             if (axisV > 0 && directionCommand != 0)
             {   // 上入力
@@ -115,22 +110,22 @@ public class PlayerCommand : MonoBehaviour
                 nameBox.GetComponent<Text>().text = "";
                 textBox.GetComponent<Text>().text = "アイテムを使わずに戻る";
             }
-            else if (axisH < 0 && directionCommand != 1 && PlayerController.canUseRed && PlayerController.haveApple > 0)
+            else if (axisH < 0 && directionCommand != 1 && GameManager.instance.canUseRed && GameManager.instance.haveApple > 0)
             {   // 左入力
                 SetFirstCommand(1, ui.commandBoxApple, ui.commandBoxReturn, ui.commandBoxHerb, ui.commandBoxFlower);
-                nameBox.GetComponent<Text>().text = "所持数: " + PlayerController.haveApple.ToString();
+                nameBox.GetComponent<Text>().text = "所持数: " + GameManager.instance.haveApple.ToString();
                 textBox.GetComponent<Text>().text = "効果: 敵に与えるダメージが 1 増える";
             }
-            else if (axisV < 0 && directionCommand != 2 && PlayerController.canUseGreen && PlayerController.haveHerb > 0)
+            else if (axisV < 0 && directionCommand != 2 && GameManager.instance.canUseGreen && GameManager.instance.haveHerb > 0)
             {   // 下入力
                 SetFirstCommand(2, ui.commandBoxHerb, ui.commandBoxReturn, ui.commandBoxApple, ui.commandBoxFlower);
-                nameBox.GetComponent<Text>().text = "所持数: " + PlayerController.haveHerb.ToString();
+                nameBox.GetComponent<Text>().text = "所持数: " + GameManager.instance.haveHerb.ToString();
                 textBox.GetComponent<Text>().text = "効果: 自分の HP が 3 回復する";
             }
-            else if (axisH > 0 && directionCommand != 3 && PlayerController.canUseBlue && PlayerController.haveFlower > 0)
+            else if (axisH > 0 && directionCommand != 3 && GameManager.instance.canUseBlue && GameManager.instance.haveFlower > 0)
             {   // 右入力
                 SetFirstCommand(3, ui.commandBoxFlower, ui.commandBoxReturn, ui.commandBoxApple, ui.commandBoxHerb);
-                nameBox.GetComponent<Text>().text = "所持数: " + PlayerController.haveFlower.ToString();
+                nameBox.GetComponent<Text>().text = "所持数: " + GameManager.instance.haveFlower.ToString();
                 textBox.GetComponent<Text>().text = "効果: 自分のスピードが 2 倍になる";
             }
 
@@ -141,10 +136,10 @@ public class PlayerCommand : MonoBehaviour
                 Item(directionCommand);
                 InactiveTalkBox();
                 ui.InactiveItemCommandImage();
-                gameManager.InactiveItemCommand();
+                buttleManager.InactiveItemCommand();
 
                 // アクションモードへ戻る
-                gameManager.ActionMode();
+                buttleManager.ActionMode();
             }
         }
     }
@@ -165,42 +160,42 @@ public class PlayerCommand : MonoBehaviour
         {
             case 0:
                 // 黒攻撃
-                enemy.GetDamage(PlayerController.power + player.plusPower);
+                enemy.GetDamage(player.power + player.plusPower);
                 return;
             case 1:
                 // 赤攻撃
-                PlayerController.haveRed--;
+                GameManager.instance.haveRed--;
                 if (enemy.color == AttributeColor.Green)
                 {
-                    enemy.GetDamage(PlayerController.power * 3 + player.plusPower);
+                    enemy.GetDamage(player.power * 3 + player.plusPower);
                 }
                 else
                 {
-                    enemy.GetDamage(PlayerController.power + player.plusPower);
+                    enemy.GetDamage(player.power + player.plusPower);
                 }
                 return;
             case 2:
                 // 緑攻撃
-                PlayerController.haveGreen--;
+                GameManager.instance.haveGreen--;
                 if (enemy.color == AttributeColor.Blue)
                 {
-                    enemy.GetDamage(PlayerController.power * 3 + player.plusPower);
+                    enemy.GetDamage(player.power * 3 + player.plusPower);
                 }
                 else
                 {
-                    enemy.GetDamage(PlayerController.power + player.plusPower);
+                    enemy.GetDamage(player.power + player.plusPower);
                 }
                 return;
             case 3:
                 // 青攻撃
-                PlayerController.haveBlue--;
+                GameManager.instance.haveBlue--;
                 if (enemy.color == AttributeColor.Red)
                 {
-                    enemy.GetDamage(PlayerController.power * 3 + player.plusPower);
+                    enemy.GetDamage(player.power * 3 + player.plusPower);
                 }
                 else
                 {
-                    enemy.GetDamage(PlayerController.power + player.plusPower);
+                    enemy.GetDamage(player.power + player.plusPower);
                 }
                 return;
             default:
@@ -214,19 +209,19 @@ public class PlayerCommand : MonoBehaviour
         {
             case 1:
                 // リンゴ（パワーアップ）を使う
-                PlayerController.haveApple--;
+                GameManager.instance.haveApple--;
                 player.plusPower = 1;
                 return;
             case 2:
                 // やくそう（回復）を使う
-                PlayerController.haveHerb--;
-                PlayerController.hp += 3;
+                GameManager.instance.haveHerb--;
+                player.hp += 3;
                 // HP は5より大きくはならない
-                if (PlayerController.hp > 5) PlayerController.hp = 5;
+                if (player.hp > 5) player.hp = 5;
                 return;
             case 3:
                 // はな（スピードバフ）を使う
-                PlayerController.haveFlower--;
+                GameManager.instance.haveFlower--;
                 player.plusSpeed = 3.0f;
                 return;
             default:

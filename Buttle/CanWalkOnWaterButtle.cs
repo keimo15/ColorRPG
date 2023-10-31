@@ -8,7 +8,7 @@ public class CanWalkOnWaterButtle : MonoBehaviour
 
     void Start()
     {
-        if (PlayerController.canWalk && groundLayer != null)
+        if (GameManager.instance.canWalk && groundLayer != null)
         {
             gameObject.layer = LayerMask.NameToLayer(groundLayer);
         }

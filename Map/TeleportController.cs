@@ -20,14 +20,14 @@ public class TeleportController : MonoBehaviour
     public GameObject yesPointer;
     public GameObject noPointer;
 
-    public string sceneName = "";   // 移動先のシーン
+    public MapSceneName sceneName;  // 移動先のシーン
     public int doorNumber = 0;      // ドア番号
 
     float axisH = 0.0f;
 
     void Start()
     {
-        questionPointer = true;
+        questionPointer = false;
         InactiveTalkBox();
     }
 
@@ -36,18 +36,20 @@ public class TeleportController : MonoBehaviour
         if (!canTalk) return;
 
         // 会話していない状態でスペースキーを押すと会話が始まる
-        if (GameManager.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
+        if (GameManager.instance.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
         {
-            GameManager.gameState = GameState.Talking;
+            PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
+            player.Stop();
+            questionPointer = false;
+            GameManager.instance.gameState = GameState.Talking;
             ActiveTalkBox();
             nameBox.GetComponent<Text>().text = name;
             textBox.GetComponent<Text>().text = content;
-            questionPointer = true;
-            InactiveImage(noPointer);
+            InactiveImage(yesPointer);
             return;
         }
 
-        if (GameManager.gameState != GameState.Talking) return;
+        if (GameManager.instance.gameState != GameState.Talking) return;
 
         // 左右キー入力
         axisH = Input.GetAxisRaw("Horizontal");
@@ -70,11 +72,11 @@ public class TeleportController : MonoBehaviour
             // 「はい」が選択されているならアイテムを購入する
             if (questionPointer)
             {
-                GameManager.gameState = GameState.Map;
-                MapManager.ChangeScene(sceneName, doorNumber);
+                GameManager.instance.gameState = GameState.Map;
+                MapChanger.ChangeScene(sceneName.ToString(), doorNumber);
             }
             InactiveTalkBox();
-            GameManager.gameState = GameState.Map;
+            GameManager.instance.gameState = GameState.Map;
         }
     }
 

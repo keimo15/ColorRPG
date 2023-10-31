@@ -15,7 +15,6 @@ public class PlayerReward : MonoBehaviour
 
     bool talking;
 
-    [SerializeField] GameManager gameManager;
     [SerializeField] EnemyController enemy;
     [SerializeField] UIManager ui;
 
@@ -44,7 +43,7 @@ public class PlayerReward : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.gameState != GameState.Reward) return;
+        if (GameManager.instance.gameState != GameState.Reward) return;
         
         if (!talking)
         {
@@ -78,8 +77,12 @@ public class PlayerReward : MonoBehaviour
             {
                 contents[2] += "青";
             }
+            else if (enemy.name == "CaveBoss")
+            {
+                contents[2] += "赤";
+            }
             contents[2] += "」を世界に取り戻した！";
-            gameManager.unlockColor(enemy.name);
+            KillSymbolEnemy(enemy.name);
             textBox.GetComponent<Text>().text = contents[row];
             row++;
         }
@@ -88,17 +91,39 @@ public class PlayerReward : MonoBehaviour
         {
             GetItem();
             InactiveTalkBox();
-            SceneManager.LoadScene(PlayerMap.lastScene);
+            SceneManager.LoadScene(GameManager.instance.lastMapScene);
         }
     }
 
     // ドロップ品を得る
     void GetItem()
     {
-        PlayerController.haveGold  += enemy.dropGold;
-        PlayerController.haveRed   += enemy.dropRed;
-        PlayerController.haveGreen += enemy.dropGreen;
-        PlayerController.haveBlue  += enemy.dropBlue;
+        GameManager.instance.haveGold  += enemy.dropGold;
+        GameManager.instance.haveRed   += enemy.dropRed;
+        GameManager.instance.haveGreen += enemy.dropGreen;
+        GameManager.instance.haveBlue  += enemy.dropBlue;
+    }
+
+    // ボスの討伐の記録と色の解放
+    void KillSymbolEnemy(string enemyName)
+    {
+        switch(enemyName)
+        {
+          case "ForestBoss":
+            GameManager.instance.canUseGreen = true;
+            GameManager.instance.symbolEnemiesIsDead[0] = true;
+            break;
+          case "IslandBoss":
+            GameManager.instance.canUseBlue = true;
+            GameManager.instance.symbolEnemiesIsDead[1] = true;
+            break;
+          case "CaveBoss":
+            GameManager.instance.canUseRed = true;
+            GameManager.instance.symbolEnemiesIsDead[2] = true;
+            break;
+          default:
+            break;
+        }
     }
 
     // talkBox を表示する

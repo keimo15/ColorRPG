@@ -53,21 +53,21 @@ public class MapUIManager : MonoBehaviour
         }));
 
         // 各属性の開放状況に応じて非表示にする
-        if (!PlayerController.canUseRed)
+        if (!GameManager.instance.canUseRed)
         {
             InactiveImage(textR);
             InactiveImage(redNum);
             InactiveImage(iconApple);
             InactiveImage(appleNum);
         }
-        if (!PlayerController.canUseGreen)
+        if (!GameManager.instance.canUseGreen)
         {
             InactiveImage(textG);
             InactiveImage(greenNum);
             InactiveImage(iconHerb);
             InactiveImage(herbNum);
         }
-        if (!PlayerController.canUseBlue)
+        if (!GameManager.instance.canUseBlue)
         {
             InactiveImage(textB);
             InactiveImage(blueNum);
@@ -80,46 +80,46 @@ public class MapUIManager : MonoBehaviour
     public void UpdateItemCount()
     {
         // 赤
-        if (haveRed != PlayerController.haveRed)
+        if (haveRed != GameManager.instance.haveRed)
         {
-            redNum.GetComponent<Text>().text = PlayerController.haveRed.ToString();
-            haveRed = PlayerController.haveRed;
+            redNum.GetComponent<Text>().text = GameManager.instance.haveRed.ToString();
+            haveRed = GameManager.instance.haveRed;
         }
         // 緑
-        if (haveGreen != PlayerController.haveGreen)
+        if (haveGreen != GameManager.instance.haveGreen)
         {
-            greenNum.GetComponent<Text>().text = PlayerController.haveGreen.ToString();
-            haveGreen = PlayerController.haveGreen;
+            greenNum.GetComponent<Text>().text = GameManager.instance.haveGreen.ToString();
+            haveGreen = GameManager.instance.haveGreen;
         }
         // 青
-        if (haveBlue != PlayerController.haveBlue)
+        if (haveBlue != GameManager.instance.haveBlue)
         {
-            blueNum.GetComponent<Text>().text = PlayerController.haveBlue.ToString();
-            haveBlue = PlayerController.haveBlue;
+            blueNum.GetComponent<Text>().text = GameManager.instance.haveBlue.ToString();
+            haveBlue = GameManager.instance.haveBlue;
         }
         // ゴールド
-        if (haveGold != PlayerController.haveGold)
+        if (haveGold != GameManager.instance.haveGold)
         {
-            goldNum.GetComponent<Text>().text = PlayerController.haveGold.ToString();
-            haveGold = PlayerController.haveGold;
+            goldNum.GetComponent<Text>().text = GameManager.instance.haveGold.ToString();
+            haveGold = GameManager.instance.haveGold;
         }
         // りんご
-        if (haveApple != PlayerController.haveApple)
+        if (haveApple != GameManager.instance.haveApple)
         {
-            appleNum.GetComponent<Text>().text = PlayerController.haveApple.ToString();
-            haveApple = PlayerController.haveApple;
+            appleNum.GetComponent<Text>().text = GameManager.instance.haveApple.ToString();
+            haveApple = GameManager.instance.haveApple;
         }
         // やくそう
-        if (haveHerb != PlayerController.haveHerb)
+        if (haveHerb != GameManager.instance.haveHerb)
         {
-            herbNum.GetComponent<Text>().text = PlayerController.haveHerb.ToString();
-            haveHerb = PlayerController.haveHerb;
+            herbNum.GetComponent<Text>().text = GameManager.instance.haveHerb.ToString();
+            haveHerb = GameManager.instance.haveHerb;
         }
         // はな
-        if (haveFlower != PlayerController.haveFlower)
+        if (haveFlower != GameManager.instance.haveFlower)
         {
-            flowerNum.GetComponent<Text>().text = PlayerController.haveFlower.ToString();
-            haveFlower = PlayerController.haveFlower;
+            flowerNum.GetComponent<Text>().text = GameManager.instance.haveFlower.ToString();
+            haveFlower = GameManager.instance.haveFlower;
         }
     }
 

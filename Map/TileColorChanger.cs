@@ -24,16 +24,17 @@ public class TileColorChanger : MonoBehaviour
 
     void ColorChange()
     {
+        // 色が解放済みなら何もしない
         switch(tileColor)
         {
           case TileColor.Red:
-            if (PlayerController.canUseRed) return;
+            if (GameManager.instance.canUseRed) return;
             break;
           case TileColor.Green:
-            if (PlayerController.canUseGreen) return;
+            if (GameManager.instance.canUseGreen) return;
             break;
           case TileColor.Blue:
-            if (PlayerController.canUseBlue) return;
+            if (GameManager.instance.canUseBlue) return;
             break;
           default:
             break;
