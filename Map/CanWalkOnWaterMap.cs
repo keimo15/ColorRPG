@@ -11,7 +11,7 @@ public class CanWalkOnWaterMap : MonoBehaviour
     {
         if (tilemap.GetComponent<Collider2D>().enabled)
         {
-            if (PlayerController.canWalk && PlayerController.canUseBlue && tilemap != null)
+            if (GameManager.instance.canWalk && GameManager.instance.canUseBlue && tilemap != null)
             {
                 tilemap.GetComponent<Collider2D>().enabled = false;
             }

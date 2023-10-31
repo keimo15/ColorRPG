@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System;
 
 public class PlayerMap : MonoBehaviour
@@ -10,43 +9,46 @@ public class PlayerMap : MonoBehaviour
     int direction = 0;                      // 移動方向
     float axisH;                            // 横軸
     float axisV;                            // 縦軸
-    public float angleZ = -90.0f;           // 回転角度
+    float angleZ = -90.0f;                  // 回転角度
     Rigidbody2D rbody;                      // 当たり判定
     Animator animator;                      // Animator
-    public bool canEncount = true;          // エンカウントするか否か
-    public int rate = 300;                  // エンカウント率
-    string enemyScene;                      // エンカウント先のシーン
-    public static string lastScene;         // エンカウント前のシーン
-    public static Vector2 lastPlayerPos;    // エンカウント前の座標
-
-    public string[] enemies;                                                // ランダムエンカウント一覧
-    public SymbolEncount[] symbolEncount;                                   // シンボルエンカウント一覧（現在のマップの）
-    public static string[] symbolEnemies
-        = {"ForestBoss", "IslandBoss", "CaveBoss"};                         // シンボルエンカウント一覧
-    public static bool[] symbolEnemiesIsDead = new bool[3];                 // シンボルエンカウント討伐状況
-    System.Random r = new System.Random();
 
     [SerializeField] MapUIManager ui;
+    [SerializeField] MapManager mapManager;
 
-    public static bool doButtle;    // バトル後にこのシーンに遷移してきたかどうか
-
-    // Start is called before the first frame update
     void Start()
     {
-        GameStart();
+        rbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameState != GameState.Map) return;
+        if (GameManager.instance.gameState != GameState.Map) return;
 
         axisH = Input.GetAxisRaw("Horizontal");
         axisV = Input.GetAxisRaw("Vertical");
 
         ui.UpdateItemCount();
 
-        // 移動していなければ更新しない
+        // パンチ
+        // if (Input.GetKeyDown(KeyCode.Return) && PlayerController.canPunch)
+        // {
+        //     // パンチされた RedBlock を探す
+        //     GameObject[] redBlocks = GameObject.FindGameObjectsWithTag(redBlockTag);
+        //     foreach (GameObject red in redBlocks)
+        //     {
+        //         if (red == redBlock.gameObject)
+        //         {
+        //             StartCoroutine(punch.Punch(red));
+        //             StartCoroutine(ui.PunchTimer());
+        //             break;
+        //         }   
+        //     }
+        //     redBlocks = null;
+        // }
+
+        // 移動していなければアニメーションを更新しない
         if (axisH == 0 && axisV == 0)
         {
             animator.speed = 0f;
@@ -64,9 +66,9 @@ public class PlayerMap : MonoBehaviour
         }
 
         // 移動中でエンカウント可能ならランダムでエンカウント
-        if (canEncount)
+        if (mapManager.canEncount)
         {
-            Encount();
+            mapManager.Encount();
         }
     }
 
@@ -74,41 +76,6 @@ public class PlayerMap : MonoBehaviour
     {
         // 移動速度の更新
         rbody.velocity = new Vector2(axisH, axisV). normalized * speed;
-    }
-
-    // 接触
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "NoEncountTrigger")
-        {
-            canEncount = false;
-        }
-    }
-
-    void GameStart()
-    {
-        GameManager.gameState = GameState.Map;
-        rbody = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        // マップを開くたびに討伐済みのシンボルエンカウントを削除する
-        for (int i=0; i<symbolEnemiesIsDead.Length; i++)
-        {
-            if (symbolEnemies[i] == null) continue;
-            if (symbolEnemiesIsDead[i])
-            {
-                foreach (SymbolEncount symbol in symbolEncount)
-                {
-                    if (symbol == null) continue;
-                    if (symbol.sceneName == symbolEnemies[i])
-                    {
-                        symbol.DestroySymbolEnemy();
-                    }
-                }
-            }
-        }
-        if (doButtle) this.transform.position = lastPlayerPos;
-        doButtle = false;
-        PlayerController.hp = 5;
     }
 
     int GetDirection()
@@ -163,36 +130,10 @@ public class PlayerMap : MonoBehaviour
         return angle;
     }
 
-    void Encount()
+    public void Stop()
     {
-        if (enemies == null) return;
-        var rateEncount = UnityEngine.Random.Range(0, rate);
-        if (rateEncount == 50)
-        {
-            enemyScene = enemies[r.Next(enemies.Length)];
-            StartButtle(enemyScene);
-        }
-    }
-
-    public void StartButtle(string scene)
-    {
-        // 今のマップと座標を記録する
-        lastScene = SceneManager.GetActiveScene().name;
-        lastPlayerPos = new Vector2(this.transform.position.x, this.transform.position.y);
-        doButtle = true;
-        MapManager.ChangeScene(scene, -1);
-    }
-
-    // 討伐済みシンボルモンスターを記録する
-    public static void KillSymbolEnemy(string enemyName)
-    {
-        for (int i=0; i<symbolEnemies.Length; i++)
-        {
-            if (enemyName == symbolEnemies[i])
-            {
-                symbolEnemiesIsDead[i] = true;
-                return;
-            }
-        }
+        axisH = 0;
+        axisV = 0;
+        rbody.velocity = new Vector2(0, 0);
     }
 }

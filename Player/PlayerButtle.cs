@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
-public class PlayerController : MonoBehaviour
+public class PlayerButtle : MonoBehaviour
 {
     Rigidbody2D rbody;                  // 当たり判定
     public Transform playerPos;         // Player の座標
@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool onGround = false;       // 地上判定
     bool inDamage = false;              // ダメージ中フラグ
     public LayerMask groundLayer;       // 着地できるレイヤー
-    public LayerMask moveGroundLayer;
+    public LayerMask moveGroundLayer;   // 着地できるレイヤー（動く床）
 
     private GroundMoverStraight moveStraightObj = null;
     private GroundMoverLoop moveLoopObj = null;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private string redBlockTag           = "RedBlock";
     private Collision2D redBlock;
 
-    [SerializeField] GameManager gameManager;
+    [SerializeField] ButtleManager buttleManager;
     [SerializeField] UIManager ui;
     [SerializeField] StageInfo[] stages;
     [SerializeField] PlayerJump jump;
@@ -32,31 +32,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerHP hpSprite;
     [SerializeField] PlayerAnimation animation;
 
-    // ステータス
-        // プレイヤーの HP
-        public static int hp = 5;
-        // 移動速度
-        public float speed = 3.0f;
-        // 攻撃力
-        public static int power = 1;
-        // 所持金
-        public static int haveGold = 0;
-        // 属性の解放状況
-        public static bool canUseGreen = true;
-        public static bool canUseBlue  = true;
-        public static bool canUseRed   = true;
-        // 属性エネルギーの所持数
-        public static int haveGreen = 10;
-        public static int haveBlue  = 10;
-        public static int haveRed   = 10;
-        // アイテムの所持数
-        public static int haveApple  = 3;
-        public static int haveHerb   = 3;
-        public static int haveFlower = 3;
-        // 能力の開放状況
-        public static bool canJump  = true;
-        public static bool canWalk  = true;
-        public static bool canPunch = true;
+    // 体力
+    public int hp = 5;
+    // 移動速度
+    public float buttleSpeed = 3.0f;
+    // 攻撃力
+    public int power = 1;
     
     // 一時的なバフ
     public int plusPower;
@@ -66,8 +47,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rbody = this.GetComponent<Rigidbody2D>();
-        GameManager.gameState = GameState.Action;
+        GameManager.instance.gameState = GameState.Action;
         // バフリセット
+        hp = 5;
         plusPower = 0;
         plusSpeed = 0;
         redBlock = null;
@@ -81,7 +63,7 @@ public class PlayerController : MonoBehaviour
         ui.UpdateItemCount();
 
         // アクション中は何もしない
-        if (GameManager.gameState != GameState.Action)
+        if (GameManager.instance.gameState != GameState.Action)
         {
             return;
         }
@@ -97,16 +79,16 @@ public class PlayerController : MonoBehaviour
 
         // 画面外に出たらリスポーン地点に戻す & ダメージを受ける
         playerPos = this.transform;
-        stages[gameManager.nowStage].OutRangePlayerMoveToStartPos(playerPos);
+        stages[ButtleManager.nowStage].OutRangePlayerMoveToStartPos(playerPos);
 
         // ジャンプ
-        if (Input.GetButtonDown("Jump") && canJump && onGround)
+        if (Input.GetButtonDown("Jump") && GameManager.instance.canJump && onGround)
         {
             jump.Jump();
         }
 
         // パンチ
-        if (Input.GetKeyDown(KeyCode.Return) && canPunch && redBlock != null && ui.punchTimerOK)
+        if (Input.GetKeyDown(KeyCode.Return) && GameManager.instance.canPunch && redBlock != null && ui.punchTimerOK)
         {
             // パンチされた RedBlock を探す
             GameObject[] redBlocks = GameObject.FindGameObjectsWithTag(redBlockTag);
@@ -126,7 +108,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()  // 物理系
     {
         // アクション中以外は何もしない
-        if (GameManager.gameState != GameState.Action || gameObject == null)
+        if (GameManager.instance.gameState != GameState.Action || gameObject == null)
         {
             return;
         }
@@ -192,18 +174,14 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
             }
-            rbody.velocity = new Vector2(axisH * (speed + plusSpeed), rbody.velocity.y) + addVelocity;
+            rbody.velocity = new Vector2(axisH * (buttleSpeed + plusSpeed), rbody.velocity.y) + addVelocity;
         }
     }
 
     // 接触
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            GetDamage(collision.gameObject);
-        }
-        else if (collision.collider.tag == moveStraightGroundTag)
+        if (collision.collider.tag == moveStraightGroundTag)
         {
             moveStraightObj = collision.gameObject.GetComponent<GroundMoverStraight>();
         }
@@ -235,34 +213,46 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
-        {
-            GetDamage(collision.gameObject);
-        }
-        else if (collision.gameObject.tag == "Attack")
+        if (collision.gameObject.tag == "Attack")
         {
             // コマンドモードへ移行
             invincibleTime(2.0f);
-            gameManager.CommandMode();
+            buttleManager.CommandMode();
         }
         else if (collision.gameObject.tag == "ItemUse")
         {
             // アイテムコマンドモードへ移行
             invincibleTime(2.0f);
-            gameManager.ItemCommandMode();
+            buttleManager.ItemCommandMode();
         }
         else if (collision.gameObject.tag == "Escape")
         {
-            if (PlayerMap.lastScene == null) return;
+            if (GameManager.instance.lastMapScene == null) return;    
             // 逃げる
-            SceneManager.LoadScene(PlayerMap.lastScene);
+            SceneManager.LoadScene(GameManager.instance.lastMapScene);
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
+        {
+            GetDamage(collision.gameObject);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
+        {
+            GetDamage(collision.gameObject);
         }
     }
 
     // 被ダメージ
     public void GetDamage(GameObject gameObject)
     {
-        if (GameManager.gameState == GameState.Action && !inDamage)
+        if (GameManager.instance.gameState == GameState.Action && !inDamage)
         {
             hp--;
             if (hp > 0)
@@ -296,7 +286,7 @@ public class PlayerController : MonoBehaviour
     // ゲームオーバー（仮）
     void GameOver()
     {
-        GameManager.gameState = GameState.GameOver;
+        GameManager.instance.gameState = GameState.GameOver;
         GetComponent<CapsuleCollider2D>().enabled = false;
         if (rbody == null) return;
         rbody.velocity = new Vector2(0, 0);

@@ -27,13 +27,13 @@ public class PeopleColorChanger : MonoBehaviour
         {
             // NPCの色が解放されているなら何もしない
           case NpcColor.Red:
-            if (PlayerController.canUseRed) return;
+            if (GameManager.instance.canUseRed) return;
             break;
           case NpcColor.Green:
-            if (PlayerController.canUseGreen) return;
+            if (GameManager.instance.canUseGreen) return;
             break;
           case NpcColor.Blue:
-            if (PlayerController.canUseBlue) return;
+            if (GameManager.instance.canUseBlue) return;
             break;
           default:
             break;

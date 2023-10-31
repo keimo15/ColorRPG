@@ -22,8 +22,6 @@ public class CannonController : MonoBehaviour
 
     public float passedTimes = 0;       // 経過時間
 
-    [SerializeField] GameManager gameManager;
-
     void Start()
     {
         float x = Mathf.Cos(direction * Mathf.Deg2Rad);
@@ -34,11 +32,12 @@ public class CannonController : MonoBehaviour
     
     void Update()
     {
-        if (GameManager.gameState != GameState.Action || stage != gameManager.nowStage)
+        if (GameManager.instance.gameState != GameState.Action || stage != ButtleManager.nowStage)
         {
             return;
         }
 
+        // プレハブを発射
         passedTimes += Time.deltaTime;
         if (passedTimes > delayTime)
         {
@@ -48,8 +47,9 @@ public class CannonController : MonoBehaviour
             rbody.AddForce(v, ForceMode2D.Impulse);
         }
 
+        // 発射位置の更新
         if (gateMove) gatePos = new Vector2(gate.transform.position.x, gate.transform.position.y);
-
+        
         updateRotation();
     }
 

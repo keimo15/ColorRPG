@@ -21,7 +21,6 @@ public class GroundMoverLoop : MonoBehaviour
     public float moveDistance;                  // 移動する距離
     float distance;                             // 移動距離 
     public bool isStartPos = true;              // 開始位置にいるかどうか
-    [SerializeField] GameManager gameManager;
     Direction startDirection;
 
     void Start()
@@ -36,7 +35,7 @@ public class GroundMoverLoop : MonoBehaviour
         if (gameObject == null) return;
 
         // アクション中ではない、もしくは別のステージにいるときは、動かさない
-        if (GameManager.gameState != GameState.Action || stageNum != gameManager.nowStage)
+        if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
             // 動かさないときに初期位置にいなければ、停止させて初期位置に戻す
             if (!isStartPos)

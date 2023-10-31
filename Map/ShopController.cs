@@ -47,9 +47,11 @@ public class ShopController : MonoBehaviour
         if (!canTalk) return;
 
         // 会話していない状態でスペースキーを押すと会話が始まる
-        if (GameManager.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
+        if (GameManager.instance.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
         {
-            GameManager.gameState = GameState.Talking;
+            PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
+            player.Stop();
+            GameManager.instance.gameState = GameState.Talking;
             ActiveTalkBox();
             nameBox.GetComponent<Text>().text = name;
             if (peopleColor.canUseColor)
@@ -65,7 +67,7 @@ public class ShopController : MonoBehaviour
             return;
         }
 
-        if (GameManager.gameState != GameState.Talking) return;
+        if (GameManager.instance.gameState != GameState.Talking) return;
 
         // 左右キー入力
         axisH = Input.GetAxisRaw("Horizontal");
@@ -86,26 +88,26 @@ public class ShopController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             // 「はい」が選択されているならアイテムを購入する
-            if (peopleColor.canUseColor && questionPointer && PlayerController.haveGold >= price)
+            if (peopleColor.canUseColor && questionPointer && GameManager.instance.haveGold >= price)
             {
                 switch (item)
                 {
                   case Item.Apple:
-                    PlayerController.haveApple++;
+                    GameManager.instance.haveApple++;
                     break;
                   case Item.Herb:
-                    PlayerController.haveHerb++;
+                    GameManager.instance.haveHerb++;
                     break;
                   case Item.Flower:
-                    PlayerController.haveFlower++;
+                    GameManager.instance.haveFlower++;
                     break;
                   default:
                     break;
                 }
-                PlayerController.haveGold -= price;
+                GameManager.instance.haveGold -= price;
             }
             InactiveTalkBox();
-            GameManager.gameState = GameState.Map;
+            GameManager.instance.gameState = GameState.Map;
         }
     }
 

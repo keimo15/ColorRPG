@@ -45,7 +45,7 @@ public class Chest : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            GameManager.gameState = GameState.Talking;
+            GameManager.instance.gameState = GameState.Talking;
             NextMessage();
         }
     }
@@ -61,14 +61,14 @@ public class Chest : MonoBehaviour
             InactiveTalkBox();
             GetNewAbility();
             GetComponent<SpriteRenderer>().sprite = openChest;
-            GameManager.gameState = GameState.Map;
+            GameManager.instance.gameState = GameState.Map;
             isOpened = true;
         }
         
         // 獲得済みの場合
-        else if ((newAbility == Ability.Jump && PlayerController.canJump) ||
-            (newAbility == Ability.Walk && PlayerController.canWalk) ||
-            (newAbility == Ability.Punch && PlayerController.canPunch))
+        else if ((newAbility == Ability.Jump && GameManager.instance.canJump) ||
+            (newAbility == Ability.Walk && GameManager.instance.canWalk) ||
+            (newAbility == Ability.Punch && GameManager.instance.canPunch))
         {
             textBox.GetComponent<Text>().text = "宝箱は空っぽだった...。";
             row = contents.Length;
@@ -87,13 +87,13 @@ public class Chest : MonoBehaviour
         switch(newAbility)
         {
           case Ability.Jump:
-            PlayerController.canJump = true;
+            GameManager.instance.canJump = true;
             break;
           case Ability.Walk:
-            PlayerController.canWalk = true;
+            GameManager.instance.canWalk = true;
             break;
           case Ability.Punch:
-            PlayerController.canPunch = true;
+            GameManager.instance.canPunch = true;
             break;
           default:
             break;

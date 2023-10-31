@@ -12,7 +12,7 @@ public class GroundMoverStraight : MonoBehaviour
     Vector2 startPos;                           // 移動開始位置
     public bool isStartPos = true;              // 開始位置にいるかどうか
     [SerializeField] StageInfo stage;           // ステージ
-    [SerializeField] GameManager gameManager;
+    [SerializeField] ButtleManager buttleManager;
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class GroundMoverStraight : MonoBehaviour
         if (gameObject == null) return;
 
         // アクション中ではない、もしくは別のステージにいるときは、動かさない
-        if (GameManager.gameState != GameState.Action || stageNum != gameManager.nowStage)
+        if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
             // 動かさないときに初期位置にいなければ、停止させて初期位置に戻す
             if (!isStartPos)

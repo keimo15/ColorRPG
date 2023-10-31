@@ -8,18 +8,19 @@ public class PlayerHP : MonoBehaviour
     public GameObject lifeImage;
     public Sprite[] blackLifeImage = new Sprite[5];
     public Sprite[] redLifeImage   = new Sprite[5];
+    [SerializeField] PlayerButtle player;
 
     public void SetHP()
     {
-        if (PlayerController.hp > 0)
+        if (player.hp > 0)
         {
-            if (PlayerController.canUseRed)
+            if (GameManager.instance.canUseRed)
             {
-                lifeImage.GetComponent<Image>().sprite = redLifeImage[PlayerController.hp-1];
+                lifeImage.GetComponent<Image>().sprite = redLifeImage[player.hp-1];
             }
             else
             {
-                lifeImage.GetComponent<Image>().sprite = blackLifeImage[PlayerController.hp-1];
+                lifeImage.GetComponent<Image>().sprite = blackLifeImage[player.hp-1];
             }
         } 
         else

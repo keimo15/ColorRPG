@@ -27,7 +27,7 @@ public class MineController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameState != GameState.Action)
+        if (GameManager.instance.gameState != GameState.Action)
         {
             passedTimes = startTime;
             return;

@@ -28,7 +28,9 @@ public class TalkController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            GameManager.gameState = GameState.Talking;
+            GameManager.instance.gameState = GameState.Talking;
+            PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
+            player.Stop();
             NextTalk();
         }
     }
@@ -55,7 +57,7 @@ public class TalkController : MonoBehaviour
         else
         {
             InactiveTalkBox();
-            GameManager.gameState = GameState.Map;
+            GameManager.instance.gameState = GameState.Map;
             row = 0;
         }
     }

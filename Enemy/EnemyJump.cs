@@ -22,7 +22,7 @@ public class EnemyJump : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.gameState != GameState.Action || gameObject == null)
+        if (GameManager.instance.gameState != GameState.Action || gameObject == null)
         {
             return;
         }

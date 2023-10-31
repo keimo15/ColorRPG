@@ -16,7 +16,7 @@ public class StageInfo : MonoBehaviour
     public Vector2 playerStartPos;
     public Vector2 enemyStartPos;
 
-    [SerializeField] PlayerController player;
+    [SerializeField] PlayerButtle player;
 
     public void OutRangePlayerMoveToStartPos(Transform playerPos)
     {

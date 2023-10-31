@@ -15,8 +15,6 @@ public class GroundStretcher : MonoBehaviour
     bool isDefault;
     private Vector3 originalScale;
 
-    [SerializeField] GameManager gameManager;
-
     void Start()
     {
         originalScale = targetObject.localScale;
@@ -26,7 +24,7 @@ public class GroundStretcher : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.gameState != GameState.Action || stageNum != gameManager.nowStage)
+        if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
             if (!isDefault)
             {

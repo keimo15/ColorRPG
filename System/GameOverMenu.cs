@@ -20,7 +20,7 @@ public class GameOverMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.gameState = GameState.GameOver;
+        GameManager.instance.gameState = GameState.GameOver;
         pointMenu = 0;   
         axisV     = 0.0f;
         upTimer   = 0.0f;
@@ -31,7 +31,7 @@ public class GameOverMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameState != GameState.GameOver)
+        if (GameManager.instance.gameState != GameState.GameOver)
         {
             return;
         }
@@ -82,6 +82,7 @@ public class GameOverMenu : MonoBehaviour
             switch (pointMenu)
             {
               case 0:
+                SceneManager.LoadScene(GameManager.instance.lastMapScene);
                 break;
               case 1:
                 SceneManager.LoadScene(TitleScene);

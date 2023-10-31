@@ -11,7 +11,6 @@ public class EnemyFly : MonoBehaviour
     public bool isToUp = false;
 
     [SerializeField] EnemyController enemy;
-    [SerializeField] GameManager gameManager;
     [SerializeField] StageInfo[] stages;
 
     Vector2 enemyStartPos;
@@ -25,7 +24,7 @@ public class EnemyFly : MonoBehaviour
     {
         if (gameObject == null) return;
 
-        if (GameManager.gameState != GameState.Action)
+        if (GameManager.instance.gameState != GameState.Action)
         {
             isToRight = true;
             isToUp = false;
@@ -35,7 +34,7 @@ public class EnemyFly : MonoBehaviour
 
         speed = 5.0f + (enemy.maxHp - enemy.hp) / 2;
 
-        Vector2 enemyStartPos = stages[gameManager.nowStage].enemyStartPos;
+        Vector2 enemyStartPos = stages[ButtleManager.nowStage].enemyStartPos;
 
         if (isToRight)
         {

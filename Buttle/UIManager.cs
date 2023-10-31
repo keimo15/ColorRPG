@@ -7,7 +7,6 @@ using System;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
     [SerializeField] EnemyController enemy;
 
     // 所持属性の数
@@ -62,28 +61,28 @@ public class UIManager : MonoBehaviour
         enemyName.GetComponent<Text>().color = color;
 
         // 各属性の開放状況に応じて非表示にする
-        if (!PlayerController.canUseRed)
+        if (!GameManager.instance.canUseRed)
         {
             InactiveImage(textR);
             InactiveImage(redNum);
             commandBoxRed.GetComponent<Image>().sprite = commandBoxNull;
             commandBoxApple.GetComponent<Image>().sprite = commandBoxNull;
         }
-        if (!PlayerController.canUseGreen)
+        if (!GameManager.instance.canUseGreen)
         {
             InactiveImage(textG);
             InactiveImage(greenNum);
             commandBoxGreen.GetComponent<Image>().sprite = commandBoxNull;
             commandBoxHerb.GetComponent<Image>().sprite = commandBoxNull;
         }
-        if (!PlayerController.canUseBlue)
+        if (!GameManager.instance.canUseBlue)
         {
             InactiveImage(textB);
             InactiveImage(blueNum);
             commandBoxBlue.GetComponent<Image>().sprite = commandBoxNull;
             commandBoxFlower.GetComponent<Image>().sprite = commandBoxNull;
         }
-        if (!PlayerController.canPunch)
+        if (!GameManager.instance.canPunch)
         {
             InactiveImage(punchIcon);
             InactiveImage(punchCount);
@@ -102,22 +101,22 @@ public class UIManager : MonoBehaviour
     public void UpdateItemCount()
     {
         // 赤
-        if (haveRed != PlayerController.haveRed)
+        if (haveRed != GameManager.instance.haveRed)
         {
-            redNum.GetComponent<Text>().text = PlayerController.haveRed.ToString();
-            haveRed = PlayerController.haveRed;
+            redNum.GetComponent<Text>().text = GameManager.instance.haveRed.ToString();
+            haveRed = GameManager.instance.haveRed;
         }
         // 緑
-        if (haveGreen != PlayerController.haveGreen)
+        if (haveGreen != GameManager.instance.haveGreen)
         {
-            greenNum.GetComponent<Text>().text = PlayerController.haveGreen.ToString();
-            haveGreen = PlayerController.haveGreen;
+            greenNum.GetComponent<Text>().text = GameManager.instance.haveGreen.ToString();
+            haveGreen = GameManager.instance.haveGreen;
         }
         // 青
-        if (haveBlue != PlayerController.haveBlue)
+        if (haveBlue != GameManager.instance.haveBlue)
         {
-            blueNum.GetComponent<Text>().text = PlayerController.haveBlue.ToString();
-            haveBlue = PlayerController.haveBlue;
+            blueNum.GetComponent<Text>().text = GameManager.instance.haveBlue.ToString();
+            haveBlue = GameManager.instance.haveBlue;
         }
     }
 
@@ -206,17 +205,6 @@ public class UIManager : MonoBehaviour
         punchCount.GetComponent<Text>().text = "OK";
         punchIcon.GetComponent<Image>().sprite = punchImage;
         punchTimerOK = true;
-    }
-
-    // リトライ
-    public void Retry()
-    {
-        // HP を戻す
-        PlayerController.hp = 5;
-
-        // ゲーム中に戻す
-        SceneManager.LoadScene(retrySceneName);     // シーン移動
-        GameManager.gameState = GameState.Action;
     }
 
     public IEnumerator DelayMethod(float waitTime, Action action)
