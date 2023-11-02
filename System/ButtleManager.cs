@@ -24,7 +24,7 @@ public class ButtleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // ゲームの状態をアクションモードにする（とりあえず）
+        // ゲームの状態をアクションモードにする
         RandomNextStage();
         PosReset();
         camera.ActionCamera(nowStage);
@@ -102,7 +102,14 @@ public class ButtleManager : MonoBehaviour
     // 次のステージをランダムで決定
     void RandomNextStage()
     {
-        nowStage = r.Next(howStage);
+        if (GetComponent<StageController>() != null)
+        {
+            nowStage = GetComponent<StageController>().NextStage();
+        }
+        else
+        {
+            nowStage = r.Next(howStage);
+        }
     }
 
     // 敵の飛び道具を削除する

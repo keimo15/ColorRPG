@@ -283,7 +283,7 @@ public class PlayerButtle : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
-    // ゲームオーバー（仮）
+    // ゲームオーバー
     void GameOver()
     {
         GameManager.instance.gameState = GameState.GameOver;

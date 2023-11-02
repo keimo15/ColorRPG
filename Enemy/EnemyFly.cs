@@ -10,7 +10,7 @@ public class EnemyFly : MonoBehaviour
     public bool isToRight = true;
     public bool isToUp = false;
 
-    [SerializeField] EnemyController enemy;
+    private EnemyController enemy;
     [SerializeField] StageInfo[] stages;
 
     Vector2 enemyStartPos;
@@ -18,6 +18,7 @@ public class EnemyFly : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        enemy = GetComponent<EnemyController>();
     }
 
     void Update()
