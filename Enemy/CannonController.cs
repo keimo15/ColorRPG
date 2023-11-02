@@ -37,6 +37,15 @@ public class CannonController : MonoBehaviour
             return;
         }
 
+        // 発射位置の更新
+        if (gateMove) gatePos = new Vector2(gate.transform.position.x, gate.transform.position.y);
+
+        ConstantlyFire();      
+        updateRotation();
+    }
+
+    void ConstantlyFire()
+    {
         // プレハブを発射
         passedTimes += Time.deltaTime;
         if (passedTimes > delayTime)
@@ -46,25 +55,10 @@ public class CannonController : MonoBehaviour
             Rigidbody2D rbody = obj.GetComponent<Rigidbody2D>();
             rbody.AddForce(v, ForceMode2D.Impulse);
         }
-
-        // 発射位置の更新
-        if (gateMove) gatePos = new Vector2(gate.transform.position.x, gate.transform.position.y);
-        
-        updateRotation();
     }
 
     void updateRotation()
     {
-        // いつか直す
-        // if (currentRotation < turnBackPoint) clockWise = false;
-        // if (currentRotation > direction)     clockWise = true;
-        // if (clockWise) currentRotation -= rotationSpeed * Time.deltaTime;
-        // else           currentRotation += rotationSpeed * Time.deltaTime;
-
-        // // 0f <= currentRotation <= 360f をキープする
-        // if (currentRotation > 360f) currentRotation -= 360f;
-        // if (currentRotation < 0f)   currentRotation += 360f;
-
         currentRotation += rotationSpeed * Time.deltaTime;
         float x = Mathf.Cos((direction + currentRotation) * Mathf.Deg2Rad);
         float y = Mathf.Sin((direction + currentRotation) * Mathf.Deg2Rad);

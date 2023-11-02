@@ -7,6 +7,7 @@ public enum MapSceneName
 {
     MapBlueTown,
     MapBlueIsland,
+    MapBoss,
     MapFirstRoad,
     MapGreenTown,
     MapGreenForest,
@@ -14,6 +15,9 @@ public enum MapSceneName
     MapRedCave1,
     MapRedCave2,
     MapRedCave3,
+    MapSecondRoad,
+    MapThirdRoad,
+    MapWhiteTown,
 }
 
 public class MapChanger : MonoBehaviour
