@@ -48,9 +48,9 @@ public class UIManager : MonoBehaviour
     public GameObject speechBalloon;
     public bool punchTimerOK;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // 開始時に不要なものは非表示にする
         InactiveImage(bigAttackImage);
         InactiveImage(bigItemImage);
         InactiveCommandImage();
@@ -207,6 +207,7 @@ public class UIManager : MonoBehaviour
         punchTimerOK = true;
     }
 
+    // 指定秒数関数の実行を遅らせる関数
     public IEnumerator DelayMethod(float waitTime, Action action)
     {
         yield return new WaitForSeconds(waitTime);

@@ -3,54 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum DrawState
-{
-    Draw,
-    Exist,
-    Blink,
-    Clear,
-}
-
-
 public class DrawBlock : MonoBehaviour
 {
-    public int stage;           // 配置されているステージ番号
+    public int stage;                               // 配置されているステージ番号
 
-    public float drawTime;      // 描画時間
-    public float existTime;     // 実体時間
-    public float blinkTime;     // 点滅時間
-    public float clearTime;     // 透明時間
+    public float drawTime;                          // 描画時間
+    public float existTime;                         // 実体時間
+    public float blinkTime;                         // 点滅時間
+    public float clearTime;                         // 透明時間
 
-    private float timer;        // 経過時間
+    private float timer;                            // 経過時間
 
-    public Sprite[] spriteDrawBlocks;   // 見た目
-    private int nowSprite;
+    public Sprite[] spriteDrawBlocks;               // 見た目
+    private int nowSprite;                          // 現在のスプライトのインデックス
 
-    public DrawState firstState;
-    private DrawState state;
-    private BoxCollider2D boxCollider2D;
+    public DrawState firstState;                    // 初期状態
+    private DrawState state;                        // 現在の状態
+    private BoxCollider2D boxCollider2D;            // 当たり判定
 
-    private bool haveReset;
-    private bool haveStateReset;
+    private bool haveReset;                         // 初期状態かの判定
+    private bool haveStateReset;                    // 状態変化した直後かどうかの判定
 
     // 時間を分割する時に使う分数 
     private int numerator;                          // 分子
     private int denominator;                        // 分母
 
-    // Start is called before the first frame update
     void Start()
     {
-        haveReset = true;
-        haveStateReset = true;
-        state = firstState;
-        timer = 0;
         GetComponent<SpriteRenderer>().sprite = spriteDrawBlocks[spriteDrawBlocks.Length-1];
         nowSprite = spriteDrawBlocks.Length;
-        GetComponent<SpriteRenderer>().enabled = true;
         boxCollider2D = GetComponent<BoxCollider2D>();
+        Reset();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (GameManager.instance.gameState != GameState.Action || stage != ButtleManager.nowStage)
@@ -59,7 +44,7 @@ public class DrawBlock : MonoBehaviour
             return;
         }
 
-        haveReset = false;
+        haveReset = false;      // 初期状態フラグを下げる
 
         switch (state)
         {

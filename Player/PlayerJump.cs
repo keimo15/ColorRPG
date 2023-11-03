@@ -8,7 +8,6 @@ public class PlayerJump : MonoBehaviour
 
     public float JumpHeight = 9.0f;     // ジャンプ力
 
-    // Start is called before the first frame update
     void Start()
     {
         rbody = this.GetComponent<Rigidbody2D>();

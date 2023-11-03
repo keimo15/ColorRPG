@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StageInfo : MonoBehaviour
 {
-    public GameObject playerObject;
-
     // 画面端
     public float limitLeft;
     public float limitRight;
@@ -18,24 +16,27 @@ public class StageInfo : MonoBehaviour
 
     [SerializeField] PlayerButtle player;
 
+    // プレイヤーが画面外に出たなら初期位置に戻し、ダメージを与える
     public void OutRangePlayerMoveToStartPos(Transform playerPos)
     {
-        if (playerObject == null || player == null)  return;
+        if (player == null)  return;
 
         if (playerPos.position.x < limitLeft || playerPos.position.x > limitRight
          || playerPos.position.y > limitUp   || playerPos.position.y < limitDown)
         {
-            playerPos.position = playerStartPos;
-            player.GetDamage(playerObject);
+            PlayerMoveToStartPos(playerPos);
+            player.GetDamage();
         }
     }
 
+    // プレイヤーを初期位置に戻す
     public void PlayerMoveToStartPos(Transform playerPos)
     {
         if (playerPos == null) return;
         playerPos.position = playerStartPos;
     }
 
+    // 敵を初期位置に戻す
     public void EnemyMoveToStartPos(Transform enemyPos)
     {
         if (enemyPos == null) return;

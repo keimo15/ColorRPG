@@ -6,12 +6,13 @@ using System;
 
 public class MineController : MonoBehaviour
 {
+    // 見た目
     public GameObject mineMarker;
     public Sprite mineMarker1;
     public Sprite mineMarker2;
     public Sprite[] bomb;
     
-    public float explodeTime = 5.0f;
+    public float explodeTime = 5.0f;        // 爆発間隔
     public float startTime = 0;
     float passedTimes;
 

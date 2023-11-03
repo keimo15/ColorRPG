@@ -11,9 +11,9 @@ public class PeopleColorChanger : MonoBehaviour
         Blue,
     }
 
-    public Color newColor;      // 変更後の色
-    public NpcColor npcColor;   // NPCの色
-    public bool canUseColor;    // NPCの色が解放されているか
+    public Color newColor;             // 変更後の色
+    public AttributeColor npcColor;    // NPCの色
+    public bool canUseColor;           // NPCの色が解放されているか
 
     void Start()
     {
@@ -26,13 +26,13 @@ public class PeopleColorChanger : MonoBehaviour
         switch(npcColor)
         {
             // NPCの色が解放されているなら何もしない
-          case NpcColor.Red:
+          case AttributeColor.Red:
             if (GameManager.instance.canUseRed) return;
             break;
-          case NpcColor.Green:
+          case AttributeColor.Green:
             if (GameManager.instance.canUseGreen) return;
             break;
-          case NpcColor.Blue:
+          case AttributeColor.Blue:
             if (GameManager.instance.canUseBlue) return;
             break;
           default:

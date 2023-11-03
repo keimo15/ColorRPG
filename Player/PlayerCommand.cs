@@ -171,7 +171,7 @@ public class PlayerCommand : MonoBehaviour
                 }
                 else
                 {
-                    enemy.GetDamage(player.power + player.plusPower);
+                    enemy.GetDamage(player.power + 1 + player.plusPower);
                 }
                 return;
             case 2:
@@ -183,7 +183,7 @@ public class PlayerCommand : MonoBehaviour
                 }
                 else
                 {
-                    enemy.GetDamage(player.power + player.plusPower);
+                    enemy.GetDamage(player.power + 1 + player.plusPower);
                 }
                 return;
             case 3:
@@ -195,7 +195,7 @@ public class PlayerCommand : MonoBehaviour
                 }
                 else
                 {
-                    enemy.GetDamage(player.power + player.plusPower);
+                    enemy.GetDamage(player.power + 1 + player.plusPower);
                 }
                 return;
             default:

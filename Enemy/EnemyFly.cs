@@ -6,19 +6,22 @@ public class EnemyFly : MonoBehaviour
 {
     Rigidbody2D rbody;
 
-    public float speed = 5.0f;
-    public bool isToRight = true;
-    public bool isToUp = false;
+    public float speed = 5.0f;                      // 移動速度
+    public bool isToRight = true;                   // 右へ移動しているか
+    public bool isToUp = false;                     // 上へ移動しているか
 
-    private EnemyController enemy;
-    [SerializeField] StageInfo[] stages;
+    private EnemyController enemy;                  // 敵
+    [SerializeField] StageInfo[] stages;            // ステージ情報
 
-    Vector2 enemyStartPos;
+    Vector2 enemyStartPos;                          // 敵の初期位置
+
+    private bool isReset;
 
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
         enemy = GetComponent<EnemyController>();
+        Reset();
     }
 
     void Update()
@@ -27,11 +30,11 @@ public class EnemyFly : MonoBehaviour
 
         if (GameManager.instance.gameState != GameState.Action)
         {
-            isToRight = true;
-            isToUp = false;
-            rbody.velocity = new Vector2(0, 0);
+            if (!isReset) Reset();
             return;
         }
+
+        isReset = false;
 
         speed = 5.0f + (enemy.maxHp - enemy.hp) / 2;
 
@@ -77,5 +80,14 @@ public class EnemyFly : MonoBehaviour
                 isToUp = false;
             }
         }
+    }
+
+    private void Reset()
+    {
+        isToRight = true;
+        isToUp = false;
+        rbody.velocity = new Vector2(0, 0);
+
+        isReset = true;
     }
 }

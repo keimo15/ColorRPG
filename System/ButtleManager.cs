@@ -6,9 +6,8 @@ using System;
 
 public class ButtleManager : MonoBehaviour
 {
-    // public static GameState gameState = GameState.Action;
-    public static int nowStage = 0;
-    public int howStage = 1;
+    public static int nowStage = 0;             // 現在のステージ番号
+    public int howStage = 1;                    // ステージ数
     GameObject[] itemCommandBoxes;
 
     System.Random r = new System.Random();
@@ -21,7 +20,6 @@ public class ButtleManager : MonoBehaviour
 
     [SerializeField] StageInfo[] stages;
 
-    // Start is called before the first frame update
     void Start()
     {
         // ゲームの状態をアクションモードにする

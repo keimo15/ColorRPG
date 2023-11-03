@@ -3,23 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum MapSceneName
-{
-    MapBlueTown,
-    MapBlueIsland,
-    MapBoss,
-    MapFirstRoad,
-    MapGreenTown,
-    MapGreenForest,
-    MapRedTown,
-    MapRedCave1,
-    MapRedCave2,
-    MapRedCave3,
-    MapSecondRoad,
-    MapThirdRoad,
-    MapWhiteTown,
-}
-
 public class MapChanger : MonoBehaviour
 {
     public static int doorNumber = 0;                                  // 最後に通過したドア番号
@@ -37,22 +20,22 @@ public class MapChanger : MonoBehaviour
             if (doorNumber == exit.doorNumber && exit != null)
             {
                 // ドア番号同じ
-                // プレイヤーキャラクター出入り口に移動
+                // プレイヤーキャラクターを出入り口に移動
                 float x = doorObj.transform.position.x;
                 float y = doorObj.transform.position.y;
-                if (exit.direction == ExitDirection.up)
+                if (exit.direction == Direction.Up)
                 {
                     y += 2;
                 }
-                else if (exit.direction == ExitDirection.right)
+                else if (exit.direction == Direction.Right)
                 {
                     x += 2;
                 }
-                else if (exit.direction == ExitDirection.down)
+                else if (exit.direction == Direction.Down)
                 {
                     y -= 2;
                 }
-                else if (exit.direction == ExitDirection.left)
+                else if (exit.direction == Direction.Left)
                 {
                     x -= 2;
                 }

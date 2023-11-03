@@ -9,7 +9,7 @@ public class FireController : MonoBehaviour
     public float fireTime = 2.0f;           // 何か物に触れてから消えるまでの時間
     public float rotation;                  // オブジェクトを回転させる
 
-    private bool touch;
+    private bool touch;                     // 何かに触れたか
     private float timerDelete;
     private float timerFire;
 

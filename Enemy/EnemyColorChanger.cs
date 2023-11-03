@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class EnemyColorChanger : MonoBehaviour
 {
-    private EnemyController enemy;
-    public AttributeColor[] changeColors;
-    public int beforeStage;
-
-    public Sprite[] enemyImages;
+    private EnemyController enemy;              // 敵
+    public AttributeColor[] changeColors;       // 変更する色
+    public int beforeStage;                     // 直前のステージ番号
+    public Sprite[] enemyImages;                // 敵の見た目
 
     // Start is called before the first frame update
     void Start()
@@ -21,18 +20,13 @@ public class EnemyColorChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.gameState != GameState.Action)
-        {
-            return;
-        }
+        if (GameManager.instance.gameState != GameState.Action) return;
 
+        // 以前のステージと異なるなら更新する
         if (beforeStage != ButtleManager.nowStage)
         {
             beforeStage = ButtleManager.nowStage;
-            if (beforeStage < changeColors.Length)
-            {
-                enemy.color = changeColors[beforeStage];
-            }
+            if (beforeStage < changeColors.Length) enemy.color = changeColors[beforeStage];
             enemy.GetComponent<SpriteRenderer>().sprite = enemyImages[beforeStage];
         }
     }
