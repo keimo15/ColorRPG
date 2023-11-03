@@ -15,6 +15,7 @@ public enum GameState
     Talking,
     GameOver,
     Title,
+    HowToPlay,
 }
 
 // マップのシーン名

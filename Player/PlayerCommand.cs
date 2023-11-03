@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerCommand : MonoBehaviour
 {
@@ -96,7 +97,7 @@ public class PlayerCommand : MonoBehaviour
                 // 敵をまだ倒していない
                 else
                 {
-                    buttleManager.ActionMode();
+                    StartCoroutine(buttleManager.ActionMode());
                 }
             }
         }
@@ -161,6 +162,7 @@ public class PlayerCommand : MonoBehaviour
             case 0:
                 // 黒攻撃
                 enemy.GetDamage(player.power + player.plusPower);
+                StartCoroutine(ui.AttackEffect(AttributeColor.Black));
                 return;
             case 1:
                 // 赤攻撃
@@ -173,6 +175,7 @@ public class PlayerCommand : MonoBehaviour
                 {
                     enemy.GetDamage(player.power + 1 + player.plusPower);
                 }
+                StartCoroutine(ui.AttackEffect(AttributeColor.Red));
                 return;
             case 2:
                 // 緑攻撃
@@ -185,6 +188,7 @@ public class PlayerCommand : MonoBehaviour
                 {
                     enemy.GetDamage(player.power + 1 + player.plusPower);
                 }
+                StartCoroutine(ui.AttackEffect(AttributeColor.Green));
                 return;
             case 3:
                 // 青攻撃
@@ -197,6 +201,7 @@ public class PlayerCommand : MonoBehaviour
                 {
                     enemy.GetDamage(player.power + 1 + player.plusPower);
                 }
+                StartCoroutine(ui.AttackEffect(AttributeColor.Blue));
                 return;
             default:
                 return;

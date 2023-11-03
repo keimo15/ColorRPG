@@ -6,7 +6,7 @@ public class PlayerJump : MonoBehaviour
 {
     Rigidbody2D rbody;
 
-    public float JumpHeight = 9.0f;     // ジャンプ力
+    public float jumpHeight = 9.0f;     // ジャンプ力
 
     void Start()
     {
@@ -15,7 +15,7 @@ public class PlayerJump : MonoBehaviour
 
     public void Jump()
     {
-        Vector2 jumpPw = new Vector2(0, JumpHeight);    // ジャンプさせるベクトルを作る
+        Vector2 jumpPw = new Vector2(0, jumpHeight);    // ジャンプさせるベクトルを作る
         rbody.AddForce(jumpPw, ForceMode2D.Impulse);    // 瞬間的な力を加える
     }
 }

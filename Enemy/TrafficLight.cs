@@ -11,7 +11,6 @@ public class TrafficLight : MonoBehaviour
     private int color;                      // 0: 青, 1: 黄, 2: 赤
     public float[] trafficTime;             // 各色の時間
     public Sprite[] spriteTrafficLights;    // 見た目
-    public GameObject stopText;             // とまれの文字
 
     private float timer;                    // 経過時間
 
@@ -76,10 +75,8 @@ public class TrafficLight : MonoBehaviour
             haveStateReset = false;
             if (color == 2)
             {
-                stopText.SetActive(true);
                 haveFired = false;
             }
-            else stopText.SetActive(false);
         }
         if (timer > trafficTime[color])
         {
@@ -99,6 +96,5 @@ public class TrafficLight : MonoBehaviour
         haveStateReset = true;
         haveFired = false;
         GetComponent<SpriteRenderer>().sprite = spriteTrafficLights[color];
-        stopText.SetActive(false);
     }
 }

@@ -15,9 +15,11 @@ public class GroundStretcher : MonoBehaviour
     public bool doStretch = true;       // 伸びるか縮むか
     bool isDefault;
     private Vector3 originalScale;      // 元の大きさ
+    private Vector2 newScale;           // 変更後の大きさ
 
     void Start()
     {
+        originalScale = targetObject.localScale;
         Reset();
     }
 
@@ -57,16 +59,26 @@ public class GroundStretcher : MonoBehaviour
         switch (stretchDirection)
         {
           case Direction.Right:
-            float newScaleX = originalScale.x + stretchSpeed * passedTimes;
+            newScale.x = originalScale.x + stretchSpeed * passedTimes;
+            break;
+          case Direction.Left:
+            newScale.x = originalScale.x - stretchSpeed * passedTimes;
+            break;
+          case Direction.Up:
+            newScale.y = originalScale.y + stretchSpeed * passedTimes;
+            break;
+          case Direction.Down:
+            newScale.y = originalScale.y - stretchSpeed * passedTimes;
             break;
         }
-        float newScaleY = originalScale.y + stretchSpeed * passedTimes;
-        targetObject.localScale = new Vector3(originalScale.x, newScaleY, originalScale.z);
+        targetObject.localScale = new Vector3(newScale.x, newScale.y, originalScale.z);
     }
 
     private void Reset()
     {
         targetObject.localScale = originalScale;
+        newScale.x = originalScale.x;
+        newScale.y = originalScale.y;
         isDefault = true;
         passedTimes = defaultTimes;
     }

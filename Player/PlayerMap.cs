@@ -32,21 +32,11 @@ public class PlayerMap : MonoBehaviour
         ui.UpdateItemCount();
 
         // パンチ
-        // if (Input.GetKeyDown(KeyCode.Return) && PlayerController.canPunch)
-        // {
-        //     // パンチされた RedBlock を探す
-        //     GameObject[] redBlocks = GameObject.FindGameObjectsWithTag(redBlockTag);
-        //     foreach (GameObject red in redBlocks)
-        //     {
-        //         if (red == redBlock.gameObject)
-        //         {
-        //             StartCoroutine(punch.Punch(red));
-        //             StartCoroutine(ui.PunchTimer());
-        //             break;
-        //         }   
-        //     }
-        //     redBlocks = null;
-        // }
+        if (mapManager.redBlock != null && Input.GetKeyDown(KeyCode.Return) && GameManager.instance.canPunch)
+        {
+            // パンチされた RedBlock を探す
+            Destroy(mapManager.redBlock);
+        }
 
         // 移動していなければアニメーションを更新しない
         if (axisH == 0 && axisV == 0)
