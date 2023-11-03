@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// プレイヤーに破壊されたブロックを元に戻すクラス
+// プレイヤーに破壊されたブロックを元に戻す
 public class RedBlock : MonoBehaviour
 {
-    Sprite originalSprite;
-    bool isReset;
+    Sprite originalSprite;      // 元の見た目
+    bool isReset;               // リセットされているかどうか
 
     void Start()
     {

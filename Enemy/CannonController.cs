@@ -13,7 +13,7 @@ public class CannonController : MonoBehaviour
     public float direction = 180f;      // 発射方向
     Vector2 v;
     Vector2 gatePos;                    // 発射位置の座標
-    public bool gateMove = false;
+    public bool gateMove = false;       // 発射位置が移動するか
 
     public float turnBackPoint = 0f;    // 回転方向を切り替える角度
     public float rotationSpeed = 0f;    // 発射方向の回転
@@ -32,10 +32,7 @@ public class CannonController : MonoBehaviour
     
     void Update()
     {
-        if (GameManager.instance.gameState != GameState.Action || stage != ButtleManager.nowStage)
-        {
-            return;
-        }
+        if (GameManager.instance.gameState != GameState.Action || stage != ButtleManager.nowStage) return;
 
         // 発射位置の更新
         if (gateMove) gatePos = new Vector2(gate.transform.position.x, gate.transform.position.y);
@@ -44,9 +41,9 @@ public class CannonController : MonoBehaviour
         updateRotation();
     }
 
+    // 一定間隔でプレハブを発射
     void ConstantlyFire()
     {
-        // プレハブを発射
         passedTimes += Time.deltaTime;
         if (passedTimes > delayTime)
         {
@@ -57,6 +54,7 @@ public class CannonController : MonoBehaviour
         }
     }
 
+    // 発射角度の変更
     void updateRotation()
     {
         currentRotation += rotationSpeed * Time.deltaTime;

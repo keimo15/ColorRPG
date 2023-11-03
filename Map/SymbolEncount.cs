@@ -6,7 +6,7 @@ public class SymbolEncount : MonoBehaviour
 {
     public Enemy sceneName;                 // シンボルエンカウントのボス名
     public int symbolNum;                   // 敵の番号
-        // 0: ForestBoss, 1: IslandBoss, 2: CaveBoss
+        // 0: ForestBoss, 1: IslandBoss, 2: CaveBoss, 3: LastBoss
     [SerializeField] MapManager mapManager;
 
     void Start()
@@ -22,6 +22,9 @@ public class SymbolEncount : MonoBehaviour
             break;
           case Enemy.CaveBoss:
             symbolNum = 2;
+            break;
+          case Enemy.LastBoss:
+            symbolNum = 3;
             break;
           default:
             break;

@@ -4,18 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public enum GameState
-{
-    Action,
-    Command,
-    UseItem,
-    Reward,
-    Map,
-    Talking,
-    GameOver,
-    Title,
-}
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;

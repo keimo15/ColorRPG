@@ -2,14 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction
-{
-    right,
-    left,
-    up,
-    down,
-}
-
 public class GroundMoverLoop : MonoBehaviour
 {
     Rigidbody2D rbody;
@@ -21,7 +13,7 @@ public class GroundMoverLoop : MonoBehaviour
     public float moveDistance;                  // 移動する距離
     float distance;                             // 移動距離 
     public bool isStartPos = true;              // 開始位置にいるかどうか
-    Direction startDirection;
+    Direction startDirection;                   // 最初の移動方向
 
     void Start()
     {
@@ -38,14 +30,7 @@ public class GroundMoverLoop : MonoBehaviour
         if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
             // 動かさないときに初期位置にいなければ、停止させて初期位置に戻す
-            if (!isStartPos)
-            {
-                rbody.velocity = new Vector2(0, 0);
-                rbody.MovePosition(startPos);
-                distance = 0;
-                isStartPos = true;
-                direction = startDirection;
-            }
+            if (!isStartPos) Reset();
             return;
         }
 
@@ -63,38 +48,47 @@ public class GroundMoverLoop : MonoBehaviour
         distance += speed * Time.deltaTime;
         switch (direction)
         {
-          case Direction.right:
+          case Direction.Right:
             rbody.velocity = new Vector2(speed, 0);
             if (distance >= moveDistance)
             {
-                direction = Direction.left;
+                direction = Direction.Left;
                 distance = 0;
             }
             break;
-          case Direction.left:
+          case Direction.Left:
             rbody.velocity = new Vector2(-speed, 0);
             if (distance >= moveDistance)
             {
-                direction = Direction.right;
+                direction = Direction.Right;
                 distance = 0;
             }
             break;
-          case Direction.up:
+          case Direction.Up:
             rbody.velocity = new Vector2(0, speed);
             if (distance >= moveDistance)
             {
-                direction = Direction.down;
+                direction = Direction.Down;
                 distance = 0;
             }
             break;
-          case Direction.down:
+          case Direction.Down:
             rbody.velocity = new Vector2(0, -speed);
             if (distance >= moveDistance)
             {
-                direction = Direction.up;
+                direction = Direction.Up;
                 distance = 0;
             }
             break;
         }
+    }
+
+    private void Reset()
+    {
+        rbody.velocity = new Vector2(0, 0);
+        rbody.MovePosition(startPos);
+        distance = 0;
+        isStartPos = true;
+        direction = startDirection;
     }
 }

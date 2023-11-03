@@ -28,12 +28,7 @@ public class GroundMoverStraight : MonoBehaviour
         if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
             // 動かさないときに初期位置にいなければ、停止させて初期位置に戻す
-            if (!isStartPos)
-            {
-                rbody.velocity = new Vector2(0, 0);
-                rbody.MovePosition(startPos);
-                isStartPos = true;
-            }
+            if (!isStartPos) Reset();
             return;
         }
 
@@ -50,7 +45,7 @@ public class GroundMoverStraight : MonoBehaviour
     {
         switch (direction)
         {
-          case Direction.right:
+          case Direction.Right:
             rbody.velocity = new Vector2(speed, 0);
             if (rbody.position.x > stage.limitRight)
             {
@@ -58,7 +53,7 @@ public class GroundMoverStraight : MonoBehaviour
                 rbody.MovePosition(v);
             }
             break;
-          case Direction.left:
+          case Direction.Left:
             rbody.velocity = new Vector2(-speed, 0);
             if (rbody.position.x < stage.limitLeft)
             {
@@ -66,7 +61,7 @@ public class GroundMoverStraight : MonoBehaviour
                 rbody.MovePosition(v);
             }
             break;
-          case Direction.up:
+          case Direction.Up:
             rbody.velocity = new Vector2(0, speed);
             if (rbody.position.y > stage.limitUp)
             {
@@ -74,7 +69,7 @@ public class GroundMoverStraight : MonoBehaviour
                 rbody.MovePosition(v);
             }
             break;
-          case Direction.down:
+          case Direction.Down:
             rbody.velocity = new Vector2(0, -speed);
             if (rbody.position.y < stage.limitDown)
             {
@@ -83,5 +78,12 @@ public class GroundMoverStraight : MonoBehaviour
             }
             break;
         }
+    }
+
+    private void Reset()
+    {
+        rbody.velocity = new Vector2(0, 0);
+        rbody.MovePosition(startPos);
+        isStartPos = true;
     }
 }

@@ -130,6 +130,7 @@ public class PlayerMap : MonoBehaviour
         return angle;
     }
 
+    // 会話中などに動かないようにする
     public void Stop()
     {
         axisH = 0;

@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Item
-{
-    Apple,
-    Herb,
-    Flower,
-}
-
 public class ShopController : MonoBehaviour
 {
     // 会話に必要な変数

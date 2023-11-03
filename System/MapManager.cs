@@ -4,25 +4,6 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
-public enum Enemy
-{
-    BlueCat,
-    BlueSlime,
-    BlueSoccerFish,
-    CaveBoss,
-    ForestBoss,
-    GreenDevil,
-    GreenSlime,
-    GreenWood,
-    IslandBoss,
-    RedBat,
-    RedDragon,
-    RedSlime,
-    RedWizard,
-    Slime,
-    LastBoss,
-}
-
 public class MapManager : MonoBehaviour
 {
     public bool canEncount = true;                  // エンカウントするか否か

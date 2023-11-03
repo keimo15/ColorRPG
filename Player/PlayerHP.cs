@@ -10,6 +10,7 @@ public class PlayerHP : MonoBehaviour
     public Sprite[] redLifeImage   = new Sprite[5];
     [SerializeField] PlayerButtle player;
 
+    // HP に応じて lifeImage を変える
     public void SetHP()
     {
         if (player.hp > 0)

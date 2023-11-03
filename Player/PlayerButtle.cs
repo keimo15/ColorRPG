@@ -7,21 +7,23 @@ using System;
 
 public class PlayerButtle : MonoBehaviour
 {
-    Rigidbody2D rbody;                  // 当たり判定
-    public Transform playerPos;         // Player の座標
-    float axisH = 0.0f;                 // 左右入力
-    public bool onGround = false;       // 地上判定
-    bool inDamage = false;              // ダメージ中フラグ
-    public LayerMask groundLayer;       // 着地できるレイヤー
-    public LayerMask moveGroundLayer;   // 着地できるレイヤー（動く床）
+    Rigidbody2D rbody;                                              // 当たり判定
+    public Transform playerPos;                                     // Player の座標
+    float axisH = 0.0f;                                             // 左右入力
+    public bool onGround = false;                                   // 地上判定
+    bool inDamage = false;                                          // ダメージ中フラグ
+    public LayerMask groundLayer;                                   // 着地できるレイヤー
+    public LayerMask moveGroundLayer;                               // 着地できるレイヤー（動く床）
 
+    // 移動床に関しては慣性をつける
     private GroundMoverStraight moveStraightObj = null;
     private GroundMoverLoop moveLoopObj = null;
     private string moveStraightGroundTag = "MoveStraightGround";
-    private string moveLoopGroundTag     = "MoveLoopGround";
+    private string moveLoopGroundTag = "MoveLoopGround";
 
+    // RedBlock 関連
     private bool nearRedBlock;
-    private string redBlockTag           = "RedBlock";
+    private string redBlockTag = "RedBlock";
     private Collision2D redBlock;
 
     [SerializeField] ButtleManager buttleManager;
@@ -150,10 +152,10 @@ public class PlayerButtle : MonoBehaviour
             {
                 switch(moveStraightObj.direction)
                 {
-                  case Direction.right:
+                  case Direction.Right:
                     addVelocity = new Vector2(moveStraightObj.speed, 0);
                     break;
-                  case Direction.left:
+                  case Direction.Left:
                     addVelocity = new Vector2(-moveStraightObj.speed, 0);
                     break;
                   default:
@@ -164,10 +166,10 @@ public class PlayerButtle : MonoBehaviour
             {
                 switch(moveLoopObj.direction)
                 {
-                  case Direction.right:
+                  case Direction.Right:
                     addVelocity = new Vector2(moveLoopObj.speed, 0);
                     break;
-                  case Direction.left:
+                  case Direction.Left:
                     addVelocity = new Vector2(-moveLoopObj.speed, 0);
                     break;
                   default:
@@ -237,7 +239,7 @@ public class PlayerButtle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
         {
-            GetDamage(collision.gameObject);
+            GetDamage();
         }
     }
 
@@ -245,12 +247,12 @@ public class PlayerButtle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyAttack")
         {
-            GetDamage(collision.gameObject);
+            GetDamage();
         }
     }
 
     // 被ダメージ
-    public void GetDamage(GameObject gameObject)
+    public void GetDamage()
     {
         if (GameManager.instance.gameState == GameState.Action && !inDamage)
         {

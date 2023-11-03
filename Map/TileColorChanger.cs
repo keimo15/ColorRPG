@@ -5,18 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class TileColorChanger : MonoBehaviour
 {
-    public enum TileColor
-    {
-        Red,
-        Green,
-        Blue
-    }
-
     public Tilemap tilemap;
     public Color newColor;
-    public TileColor tileColor;
+    public AttributeColor tileColor;
 
-    // Start is called before the first frame update
     void Start()
     {
         ColorChange();
@@ -27,13 +19,13 @@ public class TileColorChanger : MonoBehaviour
         // 色が解放済みなら何もしない
         switch(tileColor)
         {
-          case TileColor.Red:
+          case AttributeColor.Red:
             if (GameManager.instance.canUseRed) return;
             break;
-          case TileColor.Green:
+          case AttributeColor.Green:
             if (GameManager.instance.canUseGreen) return;
             break;
-          case TileColor.Blue:
+          case AttributeColor.Blue:
             if (GameManager.instance.canUseBlue) return;
             break;
           default:

@@ -4,34 +4,28 @@ using UnityEngine;
 
 public class GroundStretcher : MonoBehaviour
 {
-    public int stageNum;
+    public int stageNum;                // ステージ番号
     public Transform targetObject;
-    public float stretchSpeed = 1.0f;
+    public Direction stretchDirection;  // 伸びる方向
+    public float stretchSpeed = 1.0f;   // 伸縮スピード
     public float defaultTimes = 0f;     // 初期時間
     float passedTimes = 0f;             // 経過時間
     public float startTime = 0f;        // 伸び始める時間
     public float backTime = 0f;         // 縮み始める時間
-    public bool doStretch = true;
+    public bool doStretch = true;       // 伸びるか縮むか
     bool isDefault;
-    private Vector3 originalScale;
+    private Vector3 originalScale;      // 元の大きさ
 
     void Start()
     {
-        originalScale = targetObject.localScale;
-        passedTimes = defaultTimes;
-        isDefault = true;
+        Reset();
     }
 
     void Update()
     {
         if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
-            if (!isDefault)
-            {
-                targetObject.localScale = originalScale;
-                isDefault = true;
-                passedTimes = defaultTimes;
-            }
+            if (!isDefault) Reset();
             return;
         }
 
@@ -55,7 +49,25 @@ public class GroundStretcher : MonoBehaviour
             passedTimes -= Time.deltaTime;
         }
 
+        Stretch();
+    }
+
+    private void Stretch()
+    {
+        switch (stretchDirection)
+        {
+          case Direction.Right:
+            float newScaleX = originalScale.x + stretchSpeed * passedTimes;
+            break;
+        }
         float newScaleY = originalScale.y + stretchSpeed * passedTimes;
         targetObject.localScale = new Vector3(originalScale.x, newScaleY, originalScale.z);
+    }
+
+    private void Reset()
+    {
+        targetObject.localScale = originalScale;
+        isDefault = true;
+        passedTimes = defaultTimes;
     }
 }

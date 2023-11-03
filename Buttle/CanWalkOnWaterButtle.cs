@@ -8,6 +8,7 @@ public class CanWalkOnWaterButtle : MonoBehaviour
 
     void Start()
     {
+        // 水上歩きが解放されているなら歩けるようにする
         if (GameManager.instance.canWalk && groundLayer != null)
         {
             gameObject.layer = LayerMask.NameToLayer(groundLayer);

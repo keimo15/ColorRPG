@@ -7,13 +7,6 @@ using UnityEngine.UI;
 
 public class Chest : MonoBehaviour
 {
-    public enum Ability
-    {
-        Jump,
-        Walk,
-        Punch,
-    }
-
     int row;
     public string name;
     public string[] contents;
@@ -82,6 +75,7 @@ public class Chest : MonoBehaviour
         }
     }
 
+    // 能力解放
     void GetNewAbility()
     {
         switch(newAbility)

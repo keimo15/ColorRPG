@@ -6,14 +6,13 @@ public class EnemyJump : MonoBehaviour
 {
     Rigidbody2D rbody;
 
-    public float jumpHeight   = 9.0f;
-    public float jumpInterval = 2.0f;
-    public LayerMask groundLayer;
+    public float jumpHeight   = 9.0f;               // ジャンプの高さ
+    public float jumpInterval = 2.0f;               // ジャンプの間隔
+    public LayerMask groundLayer;                   // 地面のレイヤー
 
     float timer = 0.0f;
-    bool onGround = false;
+    bool onGround = false;                          // 地面にいるかどうか
 
-    // Start is called before the first frame update
     void Start()
     {
         rbody = this.GetComponent<Rigidbody2D>();

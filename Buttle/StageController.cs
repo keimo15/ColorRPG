@@ -5,9 +5,9 @@ using System;
 
 public class StageController : MonoBehaviour
 {
-    public bool use;
+    public bool use;            // このクラスを使うか
 
-    private int pointer;
+    private int pointer;        // 下の配列のインデックス
     public int[] hpBorders;     // 敵のステージを切り替える HP のボーダー
     public int[] stageUps;      // ステージ番号の上限
     public int[] stageDowns;    // ステージ番号の下限

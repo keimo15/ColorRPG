@@ -10,30 +10,28 @@ public class TitleMenu : MonoBehaviour
     float axisV;                // 縦入力
     float light = 0.5f;         // 非選択オブジェクトの色の薄さ
 
-    float pushTime = 0.3f;
+    float pushTime = 0.3f;      // 長押しで次に移動するまでの時間
     float upTimer;              // 上入力の長押し時間
     float downTimer;            // 下入力の長押し時間
 
     public GameObject[] menus;  // メニュー項目のテキスト
 
-    // Start is called before the first frame update
+    private bool isReset;
+
     void Start()
     {
-        GameManager.instance.gameState = GameState.Title;
-        pointMenu = 0;   
-        axisV     = 0.0f;
-        upTimer   = 0.0f;
-        downTimer = 0.0f;
-        EmphasizeText();
+        Reset();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (GameManager.instance.gameState != GameState.Title)
         {
+            if (!isReset) Reset();
             return;
         }
+
+        isReset = false;
 
         axisV = Input.GetAxisRaw("Vertical");       // 上下キー入力
         if (axisV > 0)
@@ -70,6 +68,7 @@ public class TitleMenu : MonoBehaviour
         } 
         else
         {
+            // 長押し状態を解除する
             upTimer = 0;
             downTimer = 0;
         }
@@ -115,5 +114,17 @@ public class TitleMenu : MonoBehaviour
     {
         if (image == null) return;
         image.GetComponent<Text>().color = new Color(0, 0, 0, 1);
+    }
+
+    private void Reset()
+    {
+        GameManager.instance.gameState = GameState.Title;
+        pointMenu = 0;   
+        axisV     = 0.0f;
+        upTimer   = 0.0f;
+        downTimer = 0.0f;
+        EmphasizeText();
+
+        isReset = true;
     }
 }
