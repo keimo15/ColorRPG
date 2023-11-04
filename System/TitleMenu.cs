@@ -15,11 +15,13 @@ public class TitleMenu : MonoBehaviour
     float downTimer;            // 下入力の長押し時間
 
     public GameObject[] menus;  // メニュー項目のテキスト
+    public SaveData saveData;
 
     private bool isReset;
 
     void Start()
     {
+        GameManager.instance.gameState = GameState.Title;
         Reset();
     }
 
@@ -80,11 +82,15 @@ public class TitleMenu : MonoBehaviour
             switch (pointMenu)
             {
               case 0:
+                saveData.Continue();
                 SceneManager.LoadScene(GameManager.instance.lastMapScene);
                 break;
               case 1:
+                saveData.Initialize();
+                SceneManager.LoadScene(GameManager.instance.lastMapScene);
                 break;
               case 2:
+                SceneManager.LoadScene("HowToPlay");
                 break;
               default:
                 break;
@@ -118,7 +124,6 @@ public class TitleMenu : MonoBehaviour
 
     private void Reset()
     {
-        GameManager.instance.gameState = GameState.Title;
         pointMenu = 0;   
         axisV     = 0.0f;
         upTimer   = 0.0f;

@@ -19,6 +19,8 @@ public class GameOverMenu : MonoBehaviour
 
     private bool isReset = false;
 
+    public SaveData saveData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +84,7 @@ public class GameOverMenu : MonoBehaviour
             switch (pointMenu)
             {
               case 0:
+                saveData.Continue();
                 SceneManager.LoadScene(GameManager.instance.lastMapScene);
                 break;
               case 1:

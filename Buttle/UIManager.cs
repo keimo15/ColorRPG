@@ -47,6 +47,11 @@ public class UIManager : MonoBehaviour
     public GameObject punchCount;
     public GameObject speechBalloon;
     public bool punchTimerOK;
+    public GameObject attackEffect;
+    public Sprite effectBlack;
+    public Sprite effectRed;
+    public Sprite effectGreen;
+    public Sprite effectBlue;
 
     void Start()
     {
@@ -59,6 +64,7 @@ public class UIManager : MonoBehaviour
         Color color = Color.white;
         enemyName.GetComponent<Text>().text = enemy.name;
         enemyName.GetComponent<Text>().color = color;
+        attackEffect.SetActive(false);
 
         // 各属性の開放状況に応じて非表示にする
         if (!GameManager.instance.canUseRed)
@@ -118,6 +124,36 @@ public class UIManager : MonoBehaviour
             blueNum.GetComponent<Text>().text = GameManager.instance.haveBlue.ToString();
             haveBlue = GameManager.instance.haveBlue;
         }
+    }
+
+    public IEnumerator AttackEffect(AttributeColor attackColor)
+    {
+        // 攻撃エフェクトの色を変える
+        switch (attackColor)
+        {
+          case AttributeColor.Black:
+            attackEffect.GetComponent<Image>().sprite = effectBlack;
+            break;
+
+          case AttributeColor.Red:
+            attackEffect.GetComponent<Image>().sprite = effectRed;
+            break;
+
+          case AttributeColor.Green:
+            attackEffect.GetComponent<Image>().sprite = effectGreen;
+            break;
+
+          case AttributeColor.Blue:
+            attackEffect.GetComponent<Image>().sprite = effectBlue;
+            break;
+
+          default:
+            break;
+        }
+
+        attackEffect.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        attackEffect.SetActive(false);
     }
 
     // 画像を表示にする

@@ -15,9 +15,16 @@ public class MapManager : MonoBehaviour
     [SerializeField] PlayerMap player;
     [SerializeField] SymbolEncount symbolEncount;   // シンボルエンカウント一覧（現在のマップの）
 
+    public GameObject redBlock;                     // レッドブロック（1 マップに 1 つまで）
+
+    public SaveData saveData;
+    public MapUIManager ui;
+
     void Start()
     {
         GameManager.instance.gameState = GameState.Map;
+
+        SaveDataAuto();
 
         // マップを開くたびに討伐済みのシンボルエンカウントを削除する
         if (symbolEncount != null && GameManager.instance.symbolEnemiesIsDead[symbolEncount.symbolNum])
@@ -50,5 +57,30 @@ public class MapManager : MonoBehaviour
         GameManager.instance.lastPlayerPos = new Vector2(player.transform.position.x, player.transform.position.y);
         GameManager.instance.doButtle = true;
         MapChanger.ChangeScene(scene, -1);
+    }
+
+    private void SaveDataAuto()
+    {
+        string nowSceneName = SceneManager.GetActiveScene().name;
+        switch (nowSceneName)
+        {
+          case "MapBlueTown":
+            GameManager.instance.lastPlayerPos = new Vector2(-3.5f, 3.0f);
+            break;
+          case "MapGreenTown":
+            GameManager.instance.lastPlayerPos = new Vector2(8.5f, -5.0f);
+            break;
+          case "MapRedTown":
+            GameManager.instance.lastPlayerPos = new Vector2(-7.5f, 0.0f);
+            break;
+          case "MapWhiteTown":
+            GameManager.instance.lastPlayerPos = new Vector2(8.0f, -10.0f);
+            break;
+          default:
+            return;
+        }
+        GameManager.instance.lastMapScene = nowSceneName;
+        ui.DisplaySaveText();
+        saveData.SavePlayerData(GameManager.instance);
     }
 }

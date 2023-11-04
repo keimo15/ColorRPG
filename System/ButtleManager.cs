@@ -31,8 +31,9 @@ public class ButtleManager : MonoBehaviour
     }
 
     // アクションモードへの移行
-    public void ActionMode()
+    public IEnumerator ActionMode()
     {
+        yield return new WaitForSeconds(0.5f);
         player.invincibleTime(0.5f);
         RandomNextStage();
         camera.ActionCamera(nowStage);

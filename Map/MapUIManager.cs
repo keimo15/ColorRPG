@@ -40,6 +40,10 @@ public class MapUIManager : MonoBehaviour
     public GameObject herbNum;
     public GameObject flowerNum;
 
+    // 「セーブしました」の表示
+    public GameObject saveText;
+    public GameObject saveTextBox;
+
     void Start()
     {
         // マップ名を表示し、3秒後に非表示にする
@@ -74,6 +78,9 @@ public class MapUIManager : MonoBehaviour
             InactiveImage(iconFlower);
             InactiveImage(flowerNum);
         }
+
+        InactiveImage(saveText);
+        InactiveImage(saveTextBox);
     }
 
     // 所持数更新
@@ -121,6 +128,17 @@ public class MapUIManager : MonoBehaviour
             flowerNum.GetComponent<Text>().text = GameManager.instance.haveFlower.ToString();
             haveFlower = GameManager.instance.haveFlower;
         }
+    }
+
+    public void DisplaySaveText()
+    {
+        ActiveImage(saveText);
+        ActiveImage(saveTextBox);
+        StartCoroutine(DelayMethod(3.0f, () =>
+        {
+            InactiveImage(saveText);
+            InactiveImage(saveTextBox);
+        }));
     }
 
     // 画像を表示にする

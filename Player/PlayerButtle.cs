@@ -103,6 +103,7 @@ public class PlayerButtle : MonoBehaviour
                     break;
                 }
             }
+            redBlock = null;
             redBlocks = null;
         }
     }

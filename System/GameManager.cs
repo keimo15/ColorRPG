@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+[Serializable]
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     // 最終位置
     public string lastMapScene;                                 // エンカウント前のシーン
     public Vector2 lastPlayerPos;                               // エンカウント前の座標
-    public bool[] symbolEnemiesIsDead = new bool[4];            // シンボルエンカウント討伐状況
+    public bool[] symbolEnemiesIsDead = new bool[3];            // シンボルエンカウント討伐状況
     public bool doButtle;                                       // バトル後にこのシーンに遷移してきたかどうか
 
     // シングルトン
@@ -48,15 +49,5 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }
