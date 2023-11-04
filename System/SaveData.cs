@@ -12,7 +12,7 @@ public class SaveData : MonoBehaviour
 
     void Awake()
     {
-        datapath = Application.dataPath + "/TestJson.json";
+        datapath = Application.dataPath + "/SaveData.json";
     }
 
     public void Continue()
@@ -78,7 +78,7 @@ public class SaveData : MonoBehaviour
 
     public bool FindJsonfile()
     {
-        string[] assets = AssetDatabase.FindAssets("TestJson");
+        string[] assets = AssetDatabase.FindAssets("SaveData");
         Debug.Log(assets.Length);
         if (assets.Length != 0)
         {
