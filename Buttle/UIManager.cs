@@ -18,18 +18,9 @@ public class UIManager : MonoBehaviour
     public int punchInterval = 5;
     float timer = 0;
 
-    // その他 UI
-    public string retrySceneName = "";
+    // 行動コマンド
     public GameObject bigAttackImage;
     public GameObject bigItemImage;
-    public GameObject textR;
-    public GameObject textG;
-    public GameObject textB;
-    public GameObject redNum;
-    public GameObject greenNum;
-    public GameObject blueNum;
-    public GameObject enemyName;
-    public GameObject helpMessage;
     public GameObject commandBoxBlack;
     public GameObject commandBoxRed;
     public GameObject commandBoxGreen;
@@ -40,13 +31,29 @@ public class UIManager : MonoBehaviour
     public GameObject commandBoxFlower;
     public Sprite commandBoxNull;
     public GameObject crossImage;
+    public GameObject helpMessage;
+
+    // 所持属性
+    public GameObject textR;
+    public GameObject textG;
+    public GameObject textB;
+    public GameObject redNum;
+    public GameObject greenNum;
+    public GameObject blueNum;
+
+    // 敵
+    public GameObject enemyName;
     public GameObject stopEnemy;
+
+    // パンチ
     public GameObject punchIcon;
     public Sprite punchImage;
     public Sprite cantPunchImage;
     public GameObject punchCount;
     public GameObject speechBalloon;
     public bool punchTimerOK;
+
+    // 攻撃エフェクト
     public GameObject attackEffect;
     public Sprite effectBlack;
     public Sprite effectRed;

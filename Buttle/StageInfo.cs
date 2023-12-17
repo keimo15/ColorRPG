@@ -24,6 +24,7 @@ public class StageInfo : MonoBehaviour
         if (playerPos.position.x < limitLeft || playerPos.position.x > limitRight
          || playerPos.position.y > limitUp   || playerPos.position.y < limitDown)
         {
+            player.Stop();
             PlayerMoveToStartPos(playerPos);
             player.GetDamage();
         }

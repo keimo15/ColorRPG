@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
 using System.Linq;
 
@@ -12,7 +11,7 @@ public class SaveData : MonoBehaviour
 
     void Awake()
     {
-        datapath = Application.dataPath + "/SaveData.json";
+        datapath = Application.persistentDataPath + "/SaveData.json";
     }
 
     public void Continue()
@@ -68,9 +67,11 @@ public class SaveData : MonoBehaviour
         GameManager.instance.canJump             = false;
         GameManager.instance.canWalk             = false;
         GameManager.instance.canPunch            = false;
+        GameManager.instance.sumGetDamage        = 0;
+        GameManager.instance.sumUseItem          = 0;
         GameManager.instance.lastMapScene        = "MapGreenTown";
         GameManager.instance.lastPlayerPos       = new Vector2(8.5f, -5.0f);
-        GameManager.instance.symbolEnemiesIsDead = new bool[3];
+        GameManager.instance.symbolEnemiesIsDead = new bool[4];
         GameManager.instance.doButtle            = false;
 
         SavePlayerData(GameManager.instance);
@@ -78,18 +79,6 @@ public class SaveData : MonoBehaviour
 
     public bool FindJsonfile()
     {
-        string[] assets = AssetDatabase.FindAssets("SaveData");
-        Debug.Log(assets.Length);
-        if (assets.Length != 0)
-        {
-            string[] paths = assets.Select(guid => AssetDatabase.GUIDToAssetPath(guid)).ToArray();
-            Debug.Log($"検索結果:\n{string.Join("\n", paths)}");
-            return true;
-        }
-        else
-        {
-            Debug.Log("Jsonファイルが無かった");
-            return false;
-        }
+        return File.Exists(datapath);
     }
 }

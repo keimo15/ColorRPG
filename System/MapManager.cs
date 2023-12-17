@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
     public GameObject redBlock;                     // レッドブロック（1 マップに 1 つまで）
 
     public SaveData saveData;
-    public MapUIManager ui;
+    // public MapUIManager ui;
 
     void Start()
     {
@@ -80,7 +80,7 @@ public class MapManager : MonoBehaviour
             return;
         }
         GameManager.instance.lastMapScene = nowSceneName;
-        ui.DisplaySaveText();
+        // ui.DisplaySaveText();
         saveData.SavePlayerData(GameManager.instance);
     }
 }

@@ -30,11 +30,14 @@ public class GameManager : MonoBehaviour
         public bool canJump  = false;
         public bool canWalk  = false;
         public bool canPunch = true;
+        // プレイ記録
+        public int sumGetDamage = 0;
+        public int sumUseItem = 0;
     
     // 最終位置
     public string lastMapScene;                                 // エンカウント前のシーン
     public Vector2 lastPlayerPos;                               // エンカウント前の座標
-    public bool[] symbolEnemiesIsDead = new bool[3];            // シンボルエンカウント討伐状況
+    public bool[] symbolEnemiesIsDead = new bool[4];            // シンボルエンカウント討伐状況
     public bool doButtle;                                       // バトル後にこのシーンに遷移してきたかどうか
 
     // シングルトン

@@ -24,6 +24,7 @@ public class GameOverMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateUseData();
         Reset();
     }
 
@@ -94,6 +95,22 @@ public class GameOverMenu : MonoBehaviour
                 break;
             }   
         }
+    }
+
+    // 死んでもアイテムの使用回数などは引き継ぐ
+    void UpdateUseData()
+    {
+        // 現在の状態を取得
+        int sumDamage = GameManager.instance.sumGetDamage;
+        int sumItem   = GameManager.instance.sumUseItem;
+
+        // 以前のセーブデータを読み込み
+        saveData.LoadPlayerData();
+
+        // 使用回数などのみ最新に更新する
+        GameManager.instance.sumGetDamage = sumDamage;
+        GameManager.instance.sumUseItem   = sumItem;
+        saveData.SavePlayerData(GameManager.instance);
     }
 
     // 選択中のテキストを強調する

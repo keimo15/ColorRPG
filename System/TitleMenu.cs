@@ -82,12 +82,18 @@ public class TitleMenu : MonoBehaviour
             switch (pointMenu)
             {
               case 0:
-                saveData.Continue();
-                SceneManager.LoadScene(GameManager.instance.lastMapScene);
+                if (saveData.FindJsonfile())
+                {
+                    saveData.LoadPlayerData();
+                    SceneManager.LoadScene(GameManager.instance.lastMapScene);
+                }
+                else
+                {
+                    StartNewGame();
+                }
                 break;
               case 1:
-                saveData.Initialize();
-                SceneManager.LoadScene(GameManager.instance.lastMapScene);
+                StartNewGame();
                 break;
               case 2:
                 SceneManager.LoadScene("HowToPlay");
@@ -96,6 +102,12 @@ public class TitleMenu : MonoBehaviour
                 break;
             }   
         }
+    }
+
+    void StartNewGame()
+    {
+        saveData.Initialize();
+        SceneManager.LoadScene("Opening");
     }
 
     // 選択中のテキストを強調する
