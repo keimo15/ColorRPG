@@ -45,7 +45,8 @@ public class SymbolEncount : MonoBehaviour
         // シンボルボスに対応した能力を持っているならボスを表示する
         if (   (symbolNum == 0 && GameManager.instance.canJump)
             || (symbolNum == 1 && GameManager.instance.canWalk)
-            || (symbolNum == 2 && GameManager.instance.canPunch) )
+            || (symbolNum == 2 && GameManager.instance.canPunch) 
+            || (symbolNum == 3))
         {
             haveAbility = true;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);

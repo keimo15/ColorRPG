@@ -45,6 +45,10 @@ public class PlayerButtle : MonoBehaviour
     public int plusPower;
     public float plusSpeed;
 
+    // 外的要因による強制ジャンプ
+    public bool goJumpByJumpStand = false;
+    public float plusJumpHeight = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +59,8 @@ public class PlayerButtle : MonoBehaviour
         plusPower = 0;
         plusSpeed = 0;
         redBlock = null;
+        goJumpByJumpStand = false;
+        plusJumpHeight = 0;
     }
 
     // Update is called once per frame
@@ -84,9 +90,11 @@ public class PlayerButtle : MonoBehaviour
         stages[ButtleManager.nowStage].OutRangePlayerMoveToStartPos(playerPos);
 
         // ジャンプ
-        if (Input.GetButtonDown("Jump") && GameManager.instance.canJump && onGround)
+        if ((Input.GetButtonDown("Jump") && GameManager.instance.canJump && onGround) || goJumpByJumpStand)
         {
-            jump.Jump();
+            jump.Jump(plusJumpHeight);
+            goJumpByJumpStand = false;
+            plusJumpHeight = 0;
         }
 
         // パンチ
@@ -219,13 +227,11 @@ public class PlayerButtle : MonoBehaviour
         if (collision.gameObject.tag == "Attack")
         {
             // コマンドモードへ移行
-            invincibleTime(2.0f);
             buttleManager.CommandMode();
         }
         else if (collision.gameObject.tag == "ItemUse")
         {
             // アイテムコマンドモードへ移行
-            invincibleTime(2.0f);
             buttleManager.ItemCommandMode();
         }
         else if (collision.gameObject.tag == "Escape")
@@ -233,6 +239,21 @@ public class PlayerButtle : MonoBehaviour
             if (GameManager.instance.lastMapScene == null) return;    
             // 逃げる
             SceneManager.LoadScene(GameManager.instance.lastMapScene);
+        }
+        else if (collision.gameObject.tag == "Next")
+        {
+            // 次のアクションモードへ移行
+            StartCoroutine(buttleManager.ActionMode());
+        }
+        else if (collision.gameObject.tag == "Start")
+        {  
+            // ゲームスタート
+            SceneManager.LoadScene(GameManager.instance.lastMapScene);
+        }
+        else if (collision.gameObject.tag == "End")
+        {  
+            // タイトルに戻る
+            SceneManager.LoadScene("TitleMain");
         }
     }
 
@@ -258,6 +279,7 @@ public class PlayerButtle : MonoBehaviour
         if (GameManager.instance.gameState == GameState.Action && !inDamage)
         {
             hp--;
+            GameManager.instance.sumGetDamage++;
             if (hp > 0)
             {
                 invincibleTime(1.0f);  // 無敵時間
@@ -276,6 +298,12 @@ public class PlayerButtle : MonoBehaviour
     {
         inDamage = true;
         Invoke("DamageEnd", time);
+    }
+
+    // 速度のリセット
+    public void Stop()
+    {
+        rbody.velocity = new Vector2(0, 0);
     }
 
     // ダメージ終了

@@ -13,9 +13,10 @@ public class PlayerJump : MonoBehaviour
         rbody = this.GetComponent<Rigidbody2D>();
     }
 
-    public void Jump()
+    public void Jump(float plusJumpHeight)
     {
-        Vector2 jumpPw = new Vector2(0, jumpHeight);    // ジャンプさせるベクトルを作る
-        rbody.AddForce(jumpPw, ForceMode2D.Impulse);    // 瞬間的な力を加える
+        Debug.Log("Jump: PlayerJump");
+        Vector2 jumpPw = new Vector2(0, jumpHeight + plusJumpHeight);    // ジャンプさせるベクトルを作る
+        rbody.AddForce(jumpPw, ForceMode2D.Impulse);                     // 瞬間的な力を加える
     }
 }

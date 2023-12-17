@@ -80,6 +80,10 @@ public class PlayerCommand : MonoBehaviour
                 if (enemy.hp <= 0)
                 {
                     ui.InactiveImage(ui.stopEnemy);
+                    if (enemy.lastBoss)
+                    {
+                        SceneManager.LoadScene("Ending");
+                    }
                     if (enemy.isSymbol)
                     {
                         // 連戦があるなら次のシーンを読み込む
@@ -140,7 +144,7 @@ public class PlayerCommand : MonoBehaviour
                 buttleManager.InactiveItemCommand();
 
                 // アクションモードへ戻る
-                buttleManager.ActionMode();
+                StartCoroutine(buttleManager.ActionMode());
             }
         }
     }
@@ -215,11 +219,13 @@ public class PlayerCommand : MonoBehaviour
             case 1:
                 // リンゴ（パワーアップ）を使う
                 GameManager.instance.haveApple--;
+                GameManager.instance.sumUseItem++;
                 player.plusPower = 1;
                 return;
             case 2:
                 // やくそう（回復）を使う
                 GameManager.instance.haveHerb--;
+                GameManager.instance.sumUseItem++;
                 player.hp += 3;
                 // HP は5より大きくはならない
                 if (player.hp > 5) player.hp = 5;
@@ -227,6 +233,7 @@ public class PlayerCommand : MonoBehaviour
             case 3:
                 // はな（スピードバフ）を使う
                 GameManager.instance.haveFlower--;
+                GameManager.instance.sumUseItem++;
                 player.plusSpeed = 3.0f;
                 return;
             default:

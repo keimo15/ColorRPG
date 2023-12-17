@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     public bool isSymbol = false;                           // シンボルエンカウントの敵であるか
     public bool thereIsNext = false;                        // 連戦があるか
     public string nextButtleSceneName;                      // 連戦の場合、次のシーン名
+    public bool lastBoss = false;                           // ラスボスであるか
 
     void Start()
     {

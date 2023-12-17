@@ -87,17 +87,22 @@ public class ShopController : MonoBehaviour
                 {
                   case Item.Apple:
                     GameManager.instance.haveApple++;
+                    if (GameManager.instance.haveApple > 99) GameManager.instance.haveApple = 99;
+                    else GameManager.instance.haveGold -= price;
                     break;
                   case Item.Herb:
                     GameManager.instance.haveHerb++;
+                    if (GameManager.instance.haveHerb > 99) GameManager.instance.haveHerb = 99;
+                    else GameManager.instance.haveGold -= price;
                     break;
                   case Item.Flower:
                     GameManager.instance.haveFlower++;
+                    if (GameManager.instance.haveFlower > 99) GameManager.instance.haveFlower = 99;
+                    else GameManager.instance.haveGold -= price;
                     break;
                   default:
                     break;
                 }
-                GameManager.instance.haveGold -= price;
             }
             InactiveTalkBox();
             GameManager.instance.gameState = GameState.Map;

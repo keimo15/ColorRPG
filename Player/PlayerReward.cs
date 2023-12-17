@@ -102,6 +102,16 @@ public class PlayerReward : MonoBehaviour
         GameManager.instance.haveRed   += enemy.dropRed;
         GameManager.instance.haveGreen += enemy.dropGreen;
         GameManager.instance.haveBlue  += enemy.dropBlue;
+        HaveLimit(GameManager.instance.haveGold, 99);
+        HaveLimit(GameManager.instance.haveRed, 99);
+        HaveLimit(GameManager.instance.haveGreen, 99);
+        HaveLimit(GameManager.instance.haveBlue, 99);
+    }
+
+    int HaveLimit(int num, int limit)
+    {
+        if (num > limit) return limit;
+        return num;
     }
 
     // ボスの討伐の記録と色の解放

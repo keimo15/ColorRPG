@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class ClearWall : MonoBehaviour
 {
-    public Ability keyAbility;          // 透明な壁を無効化するトリガーとなる能力
+    public AttributeColor keyColor;          // 透明な壁を無効化するトリガーとなる色
 
     void Start()
     {
         gameObject.GetComponent<Collider2D>().enabled = true;
 
-        switch (keyAbility)
+        switch (keyColor)
         {
-          case Ability.Jump:
-            if (!GameManager.instance.canJump) return;
+          case AttributeColor.Green:
+            if (!GameManager.instance.canUseGreen) return;
             break;
-          case Ability.Walk:
-            if (!GameManager.instance.canWalk) return;
+          case AttributeColor.Blue:
+            if (!GameManager.instance.canUseBlue) return;
             break;
-          case Ability.Punch:
-            if (!GameManager.instance.canPunch) return;
+          case AttributeColor.Red:
+            if (!GameManager.instance.canUseRed) return;
             break;
           default:
             return;

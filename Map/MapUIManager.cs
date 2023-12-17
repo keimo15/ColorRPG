@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MapUIManager : MonoBehaviour
 {
@@ -79,8 +80,16 @@ public class MapUIManager : MonoBehaviour
             InactiveImage(flowerNum);
         }
 
-        InactiveImage(saveText);
-        InactiveImage(saveTextBox);
+        string mapSceneName = SceneManager.GetActiveScene().name;
+        if (mapSceneName == "MapBlueTown" || mapSceneName == "MapGreenTown" || mapSceneName == "MapRedTown" || mapSceneName == "MapWhiteTown")
+        {
+            DisplaySaveText();
+        }
+        else
+        {
+            InactiveImage(saveText);
+            InactiveImage(saveTextBox);
+        }
     }
 
     // 所持数更新
