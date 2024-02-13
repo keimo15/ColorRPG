@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ButtleManager : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class ButtleManager : MonoBehaviour
         camera.ActionCamera(nowStage);                          // ステージに応じてカメラの移動
         itemCommandBoxes = GameObject.FindGameObjectsWithTag("ItemUse");
         ActiveItemCommand();                                    // 「アイテム」コマンドボックスの表示
+        SelectBGM();                                            // BGM の切り替え
     }
 
     // アクションモードへの移行
@@ -170,6 +172,26 @@ public class ButtleManager : MonoBehaviour
             {
                 itemCommandBox.SetActive(false);
             }
+        }
+    }
+
+    // BGM の切り替え
+    void SelectBGM()
+    {
+        // Opening と Ending は特定の BGM を設定
+        if (SceneManager.GetActiveScene().name == "Opening") {
+            SoundManager.soundManager.PlayBgm(BGMType.TownBright);
+        }
+        else if (SceneManager.GetActiveScene().name == "Ending") {
+            SoundManager.soundManager.PlayBgm(BGMType.Clear);
+        }
+        // エネミーの名前が "Boss" を含むならボス戦用の BGM に
+        else if (enemy.name.Contains("Boss")) {
+            SoundManager.soundManager.PlayBgm(BGMType.Boss);
+        }
+        else
+        {
+            SoundManager.soundManager.PlayBgm(BGMType.Buttle);
         }
     }
 }

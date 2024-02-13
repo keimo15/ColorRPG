@@ -11,6 +11,7 @@ public class PlayerPunchBattle : MonoBehaviour
     public IEnumerator Punch(GameObject redBlock)
     {
         // 対象のブロックをパンチする演出、判定をなくす
+        SoundManager.soundManager.PlaySE(SEType.Punch);
         redBlock.GetComponent<SpriteRenderer>().sprite = punchMark;
         redBlock.GetComponent<Collider2D>().enabled = false;
 

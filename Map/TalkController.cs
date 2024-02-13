@@ -28,6 +28,7 @@ public class TalkController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            SoundManager.soundManager.PlaySE(SEType.Click);
             GameManager.instance.gameState = GameState.Talking;
             PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
             player.Stop();

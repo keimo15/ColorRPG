@@ -35,6 +35,7 @@ public class PlayerMap : MonoBehaviour
         if (mapManager.redBlock != null && Input.GetKeyDown(KeyCode.Return) && GameManager.instance.canPunch)
         {
             // パンチされた RedBlock を探す
+            SoundManager.soundManager.PlaySE(SEType.Punch);
             Destroy(mapManager.redBlock);
         }
 

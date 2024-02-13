@@ -38,6 +38,7 @@ public class TeleportController : MonoBehaviour
         // 会話していない状態でスペースキーを押すと会話が始まる
         if (GameManager.instance.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
         {
+            SoundManager.soundManager.PlaySE(SEType.Click);
             PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
             player.Stop();
             questionPointer = false;
@@ -69,9 +70,10 @@ public class TeleportController : MonoBehaviour
         // 会話してるときにスペースキーを押すと質問への回答ができる
         if (Input.GetButtonDown("Jump"))
         {
-            // 「はい」が選択されているならアイテムを購入する
+            // 「はい」が選択されているならテレポートする
             if (questionPointer)
             {
+                SoundManager.soundManager.PlaySE(SEType.Click);
                 GameManager.instance.gameState = GameState.Map;
                 MapChanger.ChangeScene(sceneName.ToString(), doorNumber);
             }

@@ -42,6 +42,7 @@ public class ShopController : MonoBehaviour
         // 会話していない状態でスペースキーを押すと会話が始まる
         if (GameManager.instance.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
         {
+            SoundManager.soundManager.PlaySE(SEType.Click);
             PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
             player.Stop();
             GameManager.instance.gameState = GameState.Talking;
@@ -83,6 +84,7 @@ public class ShopController : MonoBehaviour
             // 「はい」が選択されているならアイテムを購入する
             if (peopleColor.canUseColor && questionPointer && GameManager.instance.haveGold >= price)
             {
+                SoundManager.soundManager.PlaySE(SEType.Click);
                 switch (item)
                 {
                   case Item.Apple:

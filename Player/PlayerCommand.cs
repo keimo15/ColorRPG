@@ -68,6 +68,7 @@ public class PlayerCommand : MonoBehaviour
             // 攻撃
             if (Input.GetButtonDown("Jump"))
             {
+                SoundManager.soundManager.PlaySE(SEType.Attack);
                 haveChosen = true;
                 Attack(directionCommand);
                 // バフのリセット
@@ -137,6 +138,7 @@ public class PlayerCommand : MonoBehaviour
             // アイテムを使う
             if (Input.GetButtonDown("Jump"))
             {
+                SoundManager.soundManager.PlaySE(SEType.Item);
                 haveChosen = true;
                 Item(directionCommand);
                 InactiveTalkBox();
@@ -149,7 +151,7 @@ public class PlayerCommand : MonoBehaviour
         }
     }
 
-    // 2つ目の引数の GameObject を強調する
+    // 選択中の GameObject を強調する
     public void SetFirstCommand(int command, GameObject choose, GameObject other1, GameObject other2, GameObject other3)
     {
         directionCommand = command;

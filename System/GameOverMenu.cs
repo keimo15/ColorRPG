@@ -145,6 +145,7 @@ public class GameOverMenu : MonoBehaviour
         upTimer   = 0.0f;
         downTimer = 0.0f;
         EmphasizeText();
+        SoundManager.soundManager.PlayBgm(BGMType.Menu);
 
         isReset = true;
     }

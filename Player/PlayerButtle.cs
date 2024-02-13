@@ -94,7 +94,7 @@ public class PlayerButtle : MonoBehaviour
         {
             jump.Jump(plusJumpHeight);
             goJumpByJumpStand = false;
-            plusJumpHeight = 0;
+            plusJumpHeight = 0;                             // ジャンプバフの解除
         }
 
         // パンチ
@@ -106,6 +106,7 @@ public class PlayerButtle : MonoBehaviour
             {
                 if (red == redBlock.gameObject)
                 {
+                    // 触れている RedBlock を見つけたらパンチして壊す
                     StartCoroutine(punch.Punch(red));
                     StartCoroutine(ui.PunchTimer());
                     break;
@@ -227,22 +228,26 @@ public class PlayerButtle : MonoBehaviour
         if (collision.gameObject.tag == "Attack")
         {
             // コマンドモードへ移行
+            SoundManager.soundManager.PlaySE(SEType.Click);
             buttleManager.CommandMode();
         }
         else if (collision.gameObject.tag == "ItemUse")
         {
             // アイテムコマンドモードへ移行
+            SoundManager.soundManager.PlaySE(SEType.Click);
             buttleManager.ItemCommandMode();
         }
         else if (collision.gameObject.tag == "Escape")
         {
             if (GameManager.instance.lastMapScene == null) return;    
             // 逃げる
+            SoundManager.soundManager.PlaySE(SEType.Click);
             SceneManager.LoadScene(GameManager.instance.lastMapScene);
         }
         else if (collision.gameObject.tag == "Next")
         {
             // 次のアクションモードへ移行
+            SoundManager.soundManager.PlaySE(SEType.Click);
             StartCoroutine(buttleManager.ActionMode());
         }
         else if (collision.gameObject.tag == "Start")
@@ -278,6 +283,7 @@ public class PlayerButtle : MonoBehaviour
     {
         if (GameManager.instance.gameState == GameState.Action && !inDamage)
         {
+            SoundManager.soundManager.PlaySE(SEType.Damage);
             hp--;
             GameManager.instance.sumGetDamage++;
             if (hp > 0)
