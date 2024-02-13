@@ -16,6 +16,7 @@ public class PlayerJump : MonoBehaviour
     public void Jump(float plusJumpHeight)
     {
         Debug.Log("Jump: PlayerJump");
+        SoundManager.soundManager.PlaySE(SEType.Jump);
         Vector2 jumpPw = new Vector2(0, jumpHeight + plusJumpHeight);    // ジャンプさせるベクトルを作る
         rbody.AddForce(jumpPw, ForceMode2D.Impulse);                     // 瞬間的な力を加える
     }

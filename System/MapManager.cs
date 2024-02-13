@@ -37,6 +37,8 @@ public class MapManager : MonoBehaviour
             player.transform.position = GameManager.instance.lastPlayerPos;
             GameManager.instance.doButtle = false;
         }
+
+        SelectBGM();
     }
 
     public void Encount()
@@ -82,5 +84,17 @@ public class MapManager : MonoBehaviour
         GameManager.instance.lastMapScene = nowSceneName;
         // ui.DisplaySaveText();
         saveData.SavePlayerData(GameManager.instance);
+    }
+
+    void SelectBGM()
+    {
+        // マップの名前が "Town" を含むなら町の BGM に
+        if (SceneManager.GetActiveScene().name.Contains("Town")) {
+            SoundManager.soundManager.PlayBgm(BGMType.TownBright);
+        }
+        else
+        {
+            SoundManager.soundManager.PlayBgm(BGMType.Dungeon);
+        }
     }
 }

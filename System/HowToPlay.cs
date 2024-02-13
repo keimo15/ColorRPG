@@ -76,8 +76,10 @@ public class HowToPlay : MonoBehaviour
 
         howToPlay.GetComponent<Image>().sprite = howToPlayImages[pointPage];
 
+        // エンターキーが入力されるとタイトルに戻る
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            SoundManager.soundManager.PlaySE(SEType.Click);
             SceneManager.LoadScene("TitleMain");
         }
     }
@@ -89,6 +91,7 @@ public class HowToPlay : MonoBehaviour
         axisH      = 0;
         rightTimer = 0;
         leftTimer  = 0;
+        SoundManager.soundManager.PlayBgm(BGMType.Menu);
 
         isReset = true;
     }

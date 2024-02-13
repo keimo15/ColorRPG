@@ -49,10 +49,12 @@ public class PlayerReward : MonoBehaviour
         {
             NextTalk();
             talking = true;
+            SoundManager.soundManager.PlayBgm(BGMType.Clear);
         }
         if (Input.GetButtonDown("Jump"))
         {
             NextTalk();
+            SoundManager.soundManager.PlaySE(SEType.Click);
         }
     }
 

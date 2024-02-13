@@ -99,3 +99,26 @@ public enum DrawState
     Clear,
 }
 
+// BGM タイプ
+public enum BGMType
+{
+    None,
+    Menu,
+    TownBright,
+    TownDark,
+    Buttle,
+    Dungeon,
+    Boss,
+    Clear,
+}
+
+// SE タイプ
+public enum SEType
+{
+    Jump,
+    Punch,
+    Attack,
+    Damage,
+    Item,
+    Click,
+}

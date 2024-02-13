@@ -77,8 +77,10 @@ public class TitleMenu : MonoBehaviour
 
         EmphasizeText();
 
+        // スペースキーでモードの選択をする
         if (Input.GetButtonDown("Jump"))
         {
+            SoundManager.soundManager.PlaySE(SEType.Click);
             switch (pointMenu)
             {
               case 0:
@@ -141,6 +143,7 @@ public class TitleMenu : MonoBehaviour
         upTimer   = 0.0f;
         downTimer = 0.0f;
         EmphasizeText();
+        SoundManager.soundManager.PlayBgm(BGMType.Menu);
 
         isReset = true;
     }

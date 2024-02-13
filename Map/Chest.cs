@@ -38,6 +38,7 @@ public class Chest : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            SoundManager.soundManager.PlaySE(SEType.Click);
             GameManager.instance.gameState = GameState.Talking;
             NextMessage();
         }
