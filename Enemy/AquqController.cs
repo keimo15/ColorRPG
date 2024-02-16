@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 画面内を反射するリング
 public class AquqController : MonoBehaviour
 {
     public float deleteTime = 3.0f;     // 削除する時間指定

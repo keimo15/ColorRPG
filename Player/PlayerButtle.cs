@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
+// バトル中のプレイヤー操作など
 public class PlayerButtle : MonoBehaviour
 {
     Rigidbody2D rbody;                                              // 当たり判定
@@ -158,6 +159,8 @@ public class PlayerButtle : MonoBehaviour
         {
             // 地面の上 or 速度が 0 ではない
             Vector2 addVelocity = Vector2.zero;
+
+            // 移動床による慣性の適用
             if (moveStraightObj != null)
             {
                 switch(moveStraightObj.direction)
@@ -323,6 +326,7 @@ public class PlayerButtle : MonoBehaviour
     // ゲームオーバー
     void GameOver()
     {
+        // ゲームオーバーシーンへの移動と演出
         GameManager.instance.gameState = GameState.GameOver;
         GetComponent<CapsuleCollider2D>().enabled = false;
         if (rbody == null) return;

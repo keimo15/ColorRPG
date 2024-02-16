@@ -10,6 +10,7 @@ public class RedBlock : MonoBehaviour
 
     void Start()
     {
+        // デフォルトの見た目を取得しておく
         originalSprite = gameObject.GetComponent<SpriteRenderer>().sprite;
         isReset = true;
     }
@@ -24,10 +25,17 @@ public class RedBlock : MonoBehaviour
 
         if (!isReset)
         {
-            gameObject.SetActive(true);
-            gameObject.GetComponent<SpriteRenderer>().sprite = originalSprite;
-            gameObject.GetComponent<Collider2D>().enabled = true;
-            isReset = true;
+            Reset();
         }
+    }
+
+    // 状態のリセット
+    void Reset()
+    {
+        // スプライトをデフォルトに戻し、表示する
+        gameObject.SetActive(true);
+        gameObject.GetComponent<SpriteRenderer>().sprite = originalSprite;
+        gameObject.GetComponent<Collider2D>().enabled = true;
+        isReset = true;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
+// データの保存
 public class SaveData : MonoBehaviour
 {
     // 保存先
@@ -14,18 +15,22 @@ public class SaveData : MonoBehaviour
         datapath = Application.persistentDataPath + "/SaveData.json";
     }
 
+    // 続きから始める
     public void Continue()
     {
+        // ファイルがあれば読み込む
         if (FindJsonfile())
         {
             LoadPlayerData();
         }
+        // 無ければ初期データを読みこむ
         else
         {
             Initialize();
         }
     }
 
+    // データをファイルに書き出す
     public void SavePlayerData(GameManager gameManager)
     {
         StreamWriter writer;
@@ -40,6 +45,7 @@ public class SaveData : MonoBehaviour
         Debug.Log("保存した");
     }
 
+    // ファイルからデータを読み込む
     public void LoadPlayerData()
     {
         string data = "";
@@ -51,6 +57,7 @@ public class SaveData : MonoBehaviour
         JsonUtility.FromJsonOverwrite(data, GameManager.instance);
     }
 
+    // 初期データを設定する
     public void Initialize()
     {
         GameManager.instance.gameState           = GameState.Map;
@@ -77,6 +84,7 @@ public class SaveData : MonoBehaviour
         SavePlayerData(GameManager.instance);
     }
 
+    // JSON ファイルがあるか確認
     public bool FindJsonfile()
     {
         return File.Exists(datapath);

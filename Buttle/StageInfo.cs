@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// ステージ情報
 public class StageInfo : MonoBehaviour
 {
     // 画面端

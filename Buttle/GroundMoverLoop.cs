@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 任意の距離を往復する足場
 public class GroundMoverLoop : MonoBehaviour
 {
     Rigidbody2D rbody;
@@ -46,6 +47,7 @@ public class GroundMoverLoop : MonoBehaviour
     void Move()
     {
         distance += speed * Time.deltaTime;
+        // 一定距離移動したら、移動距離をリセットし逆向きに進むようにする
         switch (direction)
         {
           case Direction.Right:
@@ -83,6 +85,7 @@ public class GroundMoverLoop : MonoBehaviour
         }
     }
 
+    // 状態のリセット
     private void Reset()
     {
         rbody.velocity = new Vector2(0, 0);

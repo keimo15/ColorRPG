@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// エンディングのメッセージ管理
 public class EndingContents : MonoBehaviour
 {
-    public int stageNum;
-    public string content;
+    public int stageNum;        // ステージ番号
+    public string content;      // メッセージ
 
-    private bool sameStage;
+    private bool sameStage;     // ステージ判定フラグ
 
-    public bool displayDamage;
-    public bool displayItem;
+    public bool displayDamage;  // ダメージ数を表示するか
+    public bool displayItem;    // アイテム使用数を表示するか
 
     void Start()
     {
@@ -38,6 +39,7 @@ public class EndingContents : MonoBehaviour
         }
     }
 
+    // メッセージを追加する
     void Addcontent()
     {
         if (displayDamage)    content += GameManager.instance.sumGetDamage.ToString();

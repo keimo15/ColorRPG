@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+// 地雷攻撃（数秒おきにダメージ判定）
 public class MineController : MonoBehaviour
 {
     // 見た目
@@ -13,14 +14,15 @@ public class MineController : MonoBehaviour
     public Sprite[] bomb;
     
     public float explodeTime = 5.0f;        // 爆発間隔
-    public float startTime = 0;
-    float passedTimes;
+    public float startTime = 0;             // 爆発タイミングをずらすためのデフォルトの経過時間
+    float passedTimes;                      // 経過時間
 
 
     // Start is called before the first frame update
     void Start()
     {
         mineMarker.GetComponent<SpriteRenderer>().sprite = mineMarker1;
+        // タグを Untagged にすることでダメージ判定をなくす
         gameObject.tag = "Untagged";
         passedTimes = startTime;
     }
@@ -42,6 +44,7 @@ public class MineController : MonoBehaviour
         }
     }
 
+    // 爆発（ダメージ判定の切り替え）
     IEnumerator Explode()
     {
         // 0.0 秒後 (点滅)

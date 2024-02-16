@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 八の字に飛ぶ敵の移動管理
 public class EnemyFly : MonoBehaviour
 {
     Rigidbody2D rbody;
@@ -36,10 +37,12 @@ public class EnemyFly : MonoBehaviour
 
         isReset = false;
 
+        // 残り hp が少ないほど移動速度を上げる
         speed = 5.0f + (enemy.maxHp - enemy.hp) / 2;
 
         Vector2 enemyStartPos = stages[ButtleManager.nowStage].enemyStartPos;
 
+        // 右に進むフラグが立っているとき
         if (isToRight)
         {
             if (enemy.enemyPos.position.x < enemyStartPos.x + 7.0f)
@@ -60,6 +63,7 @@ public class EnemyFly : MonoBehaviour
                 isToUp = false;
             }
         }
+        // 左に進むとき
         else
         {
             if (enemy.enemyPos.position.x > enemyStartPos.x - 7.0f)
@@ -82,6 +86,7 @@ public class EnemyFly : MonoBehaviour
         }
     }
 
+    // 状態のリセット
     private void Reset()
     {
         isToRight = true;

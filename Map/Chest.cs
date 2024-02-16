@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 宝箱（能力解放）
 // ダイアログボックス周りは TalkController と同じ
-
 public class Chest : MonoBehaviour
 {
     int row;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// テレポート
 public class TeleportController : MonoBehaviour
 {
     // 会話に必要な変数
@@ -23,10 +24,11 @@ public class TeleportController : MonoBehaviour
     public MapSceneName sceneName;  // 移動先のシーン
     public int doorNumber = 0;      // ドア番号
 
-    float axisH = 0.0f;
+    float axisH = 0.0f;             // 横入力
 
     void Start()
     {
+        // デフォルトでは「いいえ」
         questionPointer = false;
         InactiveTalkBox();
     }
@@ -39,6 +41,8 @@ public class TeleportController : MonoBehaviour
         if (GameManager.instance.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
         {
             SoundManager.soundManager.PlaySE(SEType.Click);
+
+            // 会話中はプレイヤーは停止させる
             PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
             player.Stop();
             questionPointer = false;
@@ -52,7 +56,7 @@ public class TeleportController : MonoBehaviour
 
         if (GameManager.instance.gameState != GameState.Talking) return;
 
-        // 左右キー入力
+        // 左右キー入力に応じて、ポインターを移動させる
         axisH = Input.GetAxisRaw("Horizontal");
         if (axisH < 0 && !questionPointer)
         {

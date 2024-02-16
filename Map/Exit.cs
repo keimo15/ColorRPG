@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// マップの切り替え地点
 public class Exit : MonoBehaviour
 {
     public MapSceneName sceneName;                          // 移動先のシーン
@@ -12,6 +13,7 @@ public class Exit : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            // プレイヤーが触れたら、マップ遷移する
             MapChanger.ChangeScene(sceneName.ToString(), doorNumber);
         }
     }

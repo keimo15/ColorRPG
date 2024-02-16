@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// シンボルエンカウント
 public class SymbolEncount : MonoBehaviour
 {
     public Enemy sceneName;                 // シンボルエンカウントのボス名
@@ -17,20 +18,20 @@ public class SymbolEncount : MonoBehaviour
         // 番号の設定
         switch (sceneName)
         {
-          case Enemy.ForestBoss:
-            symbolNum = 0;
-            break;
-          case Enemy.IslandBoss:
-            symbolNum = 1;
-            break;
-          case Enemy.CaveBoss:
-            symbolNum = 2;
-            break;
-          case Enemy.LastBoss:
-            symbolNum = 3;
-            break;
-          default:
-            break;
+            case Enemy.ForestBoss:
+                symbolNum = 0;
+                break;
+            case Enemy.IslandBoss:
+                symbolNum = 1;
+                break;
+            case Enemy.CaveBoss:
+                symbolNum = 2;
+                break;
+            case Enemy.LastBoss:
+                symbolNum = 3;
+                break;
+            default:
+                break;
         }
 
         haveAbility = false;

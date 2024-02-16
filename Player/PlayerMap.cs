@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// マップでのプレイヤー操作
 public class PlayerMap : MonoBehaviour
 {
     public float speed = 3.0f;              // 移動スピード
     int direction = 0;                      // 移動方向
-    float axisH;                            // 横軸
-    float axisV;                            // 縦軸
+    float axisH;                            // 横軸の入力
+    float axisV;                            // 縦軸の入力
     float angleZ = -90.0f;                  // 回転角度
     Rigidbody2D rbody;                      // 当たり判定
     Animator animator;                      // Animator

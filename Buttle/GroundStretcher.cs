@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 伸び縮みする足場
 public class GroundStretcher : MonoBehaviour
 {
     public int stageNum;                // ステージ番号
@@ -19,12 +20,14 @@ public class GroundStretcher : MonoBehaviour
 
     void Start()
     {
+        // デフォルトの長さを取得しておく
         originalScale = targetObject.localScale;
         Reset();
     }
 
     void Update()
     {
+        // アクション中ではない、もしくは別のステージにいるときは、動かさない
         if (GameManager.instance.gameState != GameState.Action || stageNum != ButtleManager.nowStage)
         {
             if (!isDefault) Reset();
@@ -33,10 +36,13 @@ public class GroundStretcher : MonoBehaviour
 
         isDefault = false;
 
+        // 伸び始めて一定時間経過したら、縮むようにフラグを下げる
         if (passedTimes >= backTime)
         {
             doStretch = false;
         }
+
+        // 縮み始めて一定時間経過したら、伸びるようにフラグを立てる
         else if (passedTimes <= startTime)
         {
             doStretch = true;
@@ -56,6 +62,7 @@ public class GroundStretcher : MonoBehaviour
 
     private void Stretch()
     {
+        // 伸びる方向によって分岐
         switch (stretchDirection)
         {
           case Direction.Right:
@@ -74,6 +81,7 @@ public class GroundStretcher : MonoBehaviour
         targetObject.localScale = new Vector3(newScale.x, newScale.y, originalScale.z);
     }
 
+    // 状態のリセット
     private void Reset()
     {
         targetObject.localScale = originalScale;

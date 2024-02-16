@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 絵を描くように見た目が変化するブロック
+// 描画 -> 実体 -> 点滅 -> 透明 を繰り返す
 public class DrawBlock : MonoBehaviour
 {
     public int stage;                               // 配置されているステージ番号
@@ -30,6 +32,7 @@ public class DrawBlock : MonoBehaviour
 
     void Start()
     {
+        // スプライトの初期化
         GetComponent<SpriteRenderer>().sprite = spriteDrawBlocks[spriteDrawBlocks.Length-1];
         nowSprite = spriteDrawBlocks.Length;
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -48,22 +51,22 @@ public class DrawBlock : MonoBehaviour
 
         switch (state)
         {
-          // 描画
+          // 「描画」
           case DrawState.Draw:
             Draw();
             break;
 
-          // 実体
+          // 「実体」
           case DrawState.Exist:
             Exist();
             break;
 
-          // 点滅
+          // 「点滅」
           case DrawState.Blink:
             Blink();
             break;
 
-          // 透明
+          // 「透明」
           case DrawState.Clear:
             Clear();
             break;
@@ -74,7 +77,7 @@ public class DrawBlock : MonoBehaviour
         timer += Time.deltaTime;
     }
 
-    // 描画
+    // 「描画」
     private void Draw()
     {
         if (haveStateReset)
@@ -113,6 +116,7 @@ public class DrawBlock : MonoBehaviour
         }
         else if (timer > drawTime)
         {
+            // 「実体」に遷移する
             GetComponent<SpriteRenderer>().sprite = spriteDrawBlocks[ spriteDrawBlocks.Length - 1 ];
             timer = 0;
             state = DrawState.Exist;
@@ -120,7 +124,7 @@ public class DrawBlock : MonoBehaviour
         }
     }
 
-    // 実体
+    // 「実体」
     private void Exist()
     {
         if (haveStateReset)
@@ -139,6 +143,7 @@ public class DrawBlock : MonoBehaviour
         }
         if (timer > existTime)
         {
+            // 「点滅」に遷移する
             timer = 0;
             state = DrawState.Blink;
             haveStateReset = true;
@@ -178,6 +183,7 @@ public class DrawBlock : MonoBehaviour
 
         if (timer > blinkTime)
         {
+            // 「透明」に遷移する
             GetComponent<SpriteRenderer>().enabled = true;
             timer = 0;
             state = DrawState.Clear;
@@ -205,14 +211,17 @@ public class DrawBlock : MonoBehaviour
 
         if (timer > clearTime)
         {
+            // 描画に遷移する
             timer = 0;
             state = DrawState.Draw;
             haveStateReset = true;
         }
     }
 
+    // 状態のリセット
     private void Reset()
     {
+        //  初期状態に戻し、タイマーをリセットし、スプライトの表示する
         state = firstState;
         timer = 0;
         GetComponent<SpriteRenderer>().enabled = true;

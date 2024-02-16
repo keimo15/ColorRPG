@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// サウンドの管理
 public class SoundManager : MonoBehaviour
 {
     // BGM のサウンドデータ

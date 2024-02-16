@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 敵のジャンプを管理する
 public class EnemyJump : MonoBehaviour
 {
     Rigidbody2D rbody;
@@ -27,6 +28,8 @@ public class EnemyJump : MonoBehaviour
         }
 
         timer -= Time.deltaTime;
+
+        // 一定時間経過するまで何もしない
         if (timer > 0)
         {
             return;
@@ -43,7 +46,7 @@ public class EnemyJump : MonoBehaviour
             // ジャンプさせる
             Vector2 jumpPw = new Vector2(0, jumpHeight);       // ジャンプさせるベクトルを作る
             rbody.AddForce(jumpPw, ForceMode2D.Impulse);       // 瞬間的な力を加える
-            timer = jumpInterval;
+            timer = jumpInterval;                              // タイマーのリセット
         }
     }
 }
