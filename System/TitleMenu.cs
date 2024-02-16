@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//  タイトル画面の管理
 public class TitleMenu : MonoBehaviour
 {
     int pointMenu;              // 0:つづきからあそぶ, 1:はじめからあそぶ, 2:あそびかた
@@ -136,6 +137,7 @@ public class TitleMenu : MonoBehaviour
         image.GetComponent<Text>().color = new Color(0, 0, 0, 1);
     }
 
+    // 状態のリセット
     private void Reset()
     {
         pointMenu = 0;   

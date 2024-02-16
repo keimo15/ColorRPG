@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// ステージ番号に応じて敵の色（見た目と属性）を変化させる
 public class EnemyColorChanger : MonoBehaviour
 {
     private EnemyController enemy;              // 敵

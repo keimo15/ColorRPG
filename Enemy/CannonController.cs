@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// プレハブを飛ばす攻撃
 public class CannonController : MonoBehaviour
 {
     public int stage;                   // ステージ番号

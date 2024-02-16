@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 信号攻撃（信号が赤の時に動くとプレハブを発射する）
 public class TrafficLight : MonoBehaviour
 {
     public int stage;                       // 配置されているステージ番号
@@ -25,7 +26,7 @@ public class TrafficLight : MonoBehaviour
     public float direction = 180f;          // 発射方向
     Vector2 v;
     Vector2 gatePos;                        // 発射位置の座標
-    private float axisH = 0.0f;                     // 左右入力
+    private float axisH = 0.0f;             // 左右入力
 
     void Start()
     {
@@ -88,6 +89,7 @@ public class TrafficLight : MonoBehaviour
         }
     }
 
+    // 状態のリセット
     private void Reset()
     {
         color = 0;

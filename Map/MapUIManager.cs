@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
+// マップでの UI
 public class MapUIManager : MonoBehaviour
 {
     // マップ名の表示
@@ -57,7 +58,7 @@ public class MapUIManager : MonoBehaviour
             InactiveImage(mapNameBox);
         }));
 
-        // 各属性の開放状況に応じて非表示にする
+        // 各属性の開放状況に応じて UI を非表示にする
         if (!GameManager.instance.canUseRed)
         {
             InactiveImage(textR);
@@ -81,6 +82,7 @@ public class MapUIManager : MonoBehaviour
         }
 
         string mapSceneName = SceneManager.GetActiveScene().name;
+        // 街に移動したときに、セーブしたことを知らせる
         if (mapSceneName == "MapBlueTown" || mapSceneName == "MapGreenTown" || mapSceneName == "MapRedTown" || mapSceneName == "MapWhiteTown")
         {
             DisplaySaveText();
@@ -139,10 +141,12 @@ public class MapUIManager : MonoBehaviour
         }
     }
 
+    // セーブしたことを知らせる
     public void DisplaySaveText()
     {
         ActiveImage(saveText);
         ActiveImage(saveTextBox);
+        // 一定時間経過したら非表示にする
         StartCoroutine(DelayMethod(3.0f, () =>
         {
             InactiveImage(saveText);

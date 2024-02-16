@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// アイテム店員
 public class ShopController : MonoBehaviour
 {
     // 会話に必要な変数
@@ -34,7 +35,6 @@ public class ShopController : MonoBehaviour
         InactiveTalkBox();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!canTalk) return;
@@ -43,15 +43,21 @@ public class ShopController : MonoBehaviour
         if (GameManager.instance.gameState != GameState.Talking && Input.GetButtonDown("Jump"))
         {
             SoundManager.soundManager.PlaySE(SEType.Click);
+
+            // 会話中はプレイヤーを停止させる
             PlayerMap player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMap>();
             player.Stop();
             GameManager.instance.gameState = GameState.Talking;
             ActiveTalkBox();
             nameBox.GetComponent<Text>().text = name;
+
+            // 色が解放されているなら会話できる
             if (peopleColor.canUseColor)
             {
                 textBox.GetComponent<Text>().text = content;
             }
+
+            // 色が解放されていなければ買い物ができない
             else
             {
                 textBox.GetComponent<Text>().text = ".........。";
@@ -87,23 +93,23 @@ public class ShopController : MonoBehaviour
                 SoundManager.soundManager.PlaySE(SEType.Click);
                 switch (item)
                 {
-                  case Item.Apple:
-                    GameManager.instance.haveApple++;
-                    if (GameManager.instance.haveApple > 99) GameManager.instance.haveApple = 99;
-                    else GameManager.instance.haveGold -= price;
-                    break;
-                  case Item.Herb:
-                    GameManager.instance.haveHerb++;
-                    if (GameManager.instance.haveHerb > 99) GameManager.instance.haveHerb = 99;
-                    else GameManager.instance.haveGold -= price;
-                    break;
-                  case Item.Flower:
-                    GameManager.instance.haveFlower++;
-                    if (GameManager.instance.haveFlower > 99) GameManager.instance.haveFlower = 99;
-                    else GameManager.instance.haveGold -= price;
-                    break;
-                  default:
-                    break;
+                    case Item.Apple:
+                        GameManager.instance.haveApple++;
+                        if (GameManager.instance.haveApple > 99) GameManager.instance.haveApple = 99;
+                        else GameManager.instance.haveGold -= price;
+                        break;
+                    case Item.Herb:
+                        GameManager.instance.haveHerb++;
+                        if (GameManager.instance.haveHerb > 99) GameManager.instance.haveHerb = 99;
+                        else GameManager.instance.haveGold -= price;
+                        break;
+                    case Item.Flower:
+                        GameManager.instance.haveFlower++;
+                        if (GameManager.instance.haveFlower > 99) GameManager.instance.haveFlower = 99;
+                        else GameManager.instance.haveGold -= price;
+                        break;
+                    default:
+                        break;
                 }
             }
             InactiveTalkBox();

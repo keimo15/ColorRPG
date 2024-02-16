@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 
+// バトル中の UI を管理する
 public class UIManager : MonoBehaviour
 {
     [SerializeField] EnemyController enemy;

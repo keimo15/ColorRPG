@@ -4,15 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// バトル勝利時の報酬管理
 public class PlayerReward : MonoBehaviour
 {
+    // テキストボックス周り
     int row;
     string name = "";
     string[] contents;
     public GameObject nameBox;
     public GameObject textBox;
     public GameObject talkBox;
-
     bool talking;
 
     [SerializeField] EnemyController enemy;
@@ -20,10 +21,12 @@ public class PlayerReward : MonoBehaviour
 
     void Start()
     {
+        // デフォルトでは「○○を倒した」を表示
         talking = false;
         row = 0;
         InactiveTalkBox();
         contents = new string[3];
+        // 敵の名前や情報などに応じて、表示するメッセージが変化する
         contents[0] = enemy.name + "を倒した";
         contents[1] = enemy.dropGold.ToString() + "ゴールド";
         if (enemy.dropRed != 0)

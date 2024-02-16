@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// プレイヤーのアニメーション
 public class PlayerAnimation : MonoBehaviour
 {
     // アニメーション
@@ -37,10 +38,12 @@ public class PlayerAnimation : MonoBehaviour
         // アニメーション更新
         if (axisH == 0)
         {
+            // 止まっているとき
             nowAnime = stopAnime;
         }
         else
         {
+            // 移動中
             nowAnime = moveAnime;
         }
         if (nowAnime != oldAnime)

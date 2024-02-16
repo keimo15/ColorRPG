@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// ゲームオーバーメニューの管理
 public class GameOverMenu : MonoBehaviour
 {
     int pointMenu;                                              // 0:つづきからあそぶ, 1:はじめからあそぶ, 2:あそびかた
@@ -21,14 +22,12 @@ public class GameOverMenu : MonoBehaviour
 
     public SaveData saveData;
 
-    // Start is called before the first frame update
     void Start()
     {
         UpdateUseData();
         Reset();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (GameManager.instance.gameState != GameState.GameOver)
@@ -137,6 +136,7 @@ public class GameOverMenu : MonoBehaviour
         image.GetComponent<Text>().color = new Color(0, 0, 0, 1);
     }
 
+    // 状態のリセット
     private void Reset()
     {
         GameManager.instance.gameState = GameState.GameOver;

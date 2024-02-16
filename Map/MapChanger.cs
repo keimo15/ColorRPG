@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// マップ管理
 public class MapChanger : MonoBehaviour
 {
     public static int doorNumber = 0;                                  // 最後に通過したドア番号

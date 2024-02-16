@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+// バトル中のパンチ
 public class PlayerPunchBattle : MonoBehaviour
 {
     public Sprite punchMark;

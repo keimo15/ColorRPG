@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
+// コマンド選択
 public class PlayerCommand : MonoBehaviour
 {
     public GameObject nameBox;

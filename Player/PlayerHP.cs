@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// プレイヤーの hp スプライト
 public class PlayerHP : MonoBehaviour
 {
     public GameObject lifeImage;

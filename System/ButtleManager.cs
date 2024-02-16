@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
+// バトル管理
 public class ButtleManager : MonoBehaviour
 {
     public static int nowStage = 0;             // 現在のステージ番号

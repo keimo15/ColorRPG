@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// プレイヤーのジャンプ
 public class PlayerJump : MonoBehaviour
 {
     Rigidbody2D rbody;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 一定の方向に進み続ける足場
 public class GroundMoverStraight : MonoBehaviour
 {
     Rigidbody2D rbody;
@@ -37,6 +38,7 @@ public class GroundMoverStraight : MonoBehaviour
 
     void Move()
     {
+        // 任意の方向に進み続け、画面外に出たなら逆から出現する（右端に消えたら、左端から出現する）
         switch (direction)
         {
           case Direction.Right:
@@ -74,6 +76,7 @@ public class GroundMoverStraight : MonoBehaviour
         }
     }
 
+    // 状態のリセット
     private void Reset()
     {
         rbody.velocity = new Vector2(0, 0);

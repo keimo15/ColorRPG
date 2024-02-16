@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
+// マップ管理
 public class MapManager : MonoBehaviour
 {
     public bool canEncount = true;                  // エンカウントするか否か
@@ -18,7 +19,6 @@ public class MapManager : MonoBehaviour
     public GameObject redBlock;                     // レッドブロック（1 マップに 1 つまで）
 
     public SaveData saveData;
-    // public MapUIManager ui;
 
     void Start()
     {
@@ -41,8 +41,10 @@ public class MapManager : MonoBehaviour
         SelectBGM();
     }
 
+    // ランダムエンカウント
     public void Encount()
     {
+        // 配列からランダムに選択しエンカウントする
         if (enemies == null) return;
         var rateEncount = UnityEngine.Random.Range(0, rate);
         if (rateEncount == 50)
@@ -63,6 +65,7 @@ public class MapManager : MonoBehaviour
 
     private void SaveDataAuto()
     {
+        // 町に入ったときにオートセーブをする
         string nowSceneName = SceneManager.GetActiveScene().name;
         switch (nowSceneName)
         {
@@ -78,11 +81,11 @@ public class MapManager : MonoBehaviour
           case "MapWhiteTown":
             GameManager.instance.lastPlayerPos = new Vector2(8.0f, -10.0f);
             break;
+          // 町以外ならセーブしない
           default:
             return;
         }
         GameManager.instance.lastMapScene = nowSceneName;
-        // ui.DisplaySaveText();
         saveData.SavePlayerData(GameManager.instance);
     }
 
@@ -92,6 +95,7 @@ public class MapManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name.Contains("Town")) {
             SoundManager.soundManager.PlayBgm(BGMType.TownBright);
         }
+        // それ以外ならダンジョン用の BGM に
         else
         {
             SoundManager.soundManager.PlayBgm(BGMType.Dungeon);

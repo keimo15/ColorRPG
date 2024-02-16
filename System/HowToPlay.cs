@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// 遊び方画面の管理
 public class HowToPlay : MonoBehaviour
 {
     int pointPage;                      // 何ページ目を指しているか          
@@ -84,6 +85,7 @@ public class HowToPlay : MonoBehaviour
         }
     }
 
+    // 状態のリセット
     private void Reset()
     {
         howToPlay.GetComponent<Image>().sprite = howToPlayImages[0];
